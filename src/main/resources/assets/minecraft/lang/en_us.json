@@ -1,0 +1,13 @@
+
+{
+  "item.minecraft.netherite_upgrade_smithing_template": "Advanced Upgrade Template",
+  "item.minecraft.netherite_upgrade_smithing_template.new": "Advanced Upgrade Template",
+  "item.minecraft.smithing_template.netherite_upgrade.additions_slot_description": "Add Tier 3 Material",
+  "item.minecraft.smithing_template.netherite_upgrade.applies_to": "Tier 2 Equipment",
+  "item.minecraft.smithing_template.netherite_upgrade.base_slot_description": "Add tier 2 armor, weapon, or tool",
+  "item.minecraft.smithing_template.netherite_upgrade.ingredients": "Tier 3 Material",
+  "item.minecraft.mace": "Mace",
+  "item.minecraft.netherite_scrap": "Ancient Scrap",
+  "item.minecraft.flint_and_steel": "Fire Striker",
+  "upgrade.minecraft.netherite_upgrade": "Advanced Upgrade"
+}

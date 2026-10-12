@@ -1,0 +1,9 @@
+package net.lixir.pre.mixin.enchantment;
+
+import net.minecraft.enchantment.EnchantmentHelper;
+import org.spongepowered.asm.mixin.Mixin;
+
+@Mixin(EnchantmentHelper.class)
+public class EnchantmentHelperMixin {
+
+}

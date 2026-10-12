@@ -1,0 +1,51 @@
+{
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:group",
+          "children": [
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:loot_table",
+                  "value": "pre:fishing/warm",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:location_check",
+                      "predicate": {
+                        "biomes": "#pre:has_warm_fishing"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "minecraft:loot_table",
+                  "value": "pre:fishing/cold",
+                  "conditions": [
+                    {
+                      "condition": "minecraft:location_check",
+                      "predicate": {
+                        "biomes": "#pre:has_cold_fishing"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "minecraft:loot_table",
+                  "value": "pre:fishing/temperate",
+                  "conditions": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "minecraft:gameplay/fishing"
+}

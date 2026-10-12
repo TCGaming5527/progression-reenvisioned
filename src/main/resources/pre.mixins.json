@@ -1,0 +1,37 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.lixir.pre.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "block.AbstractFireBlockMixin",
+    "enchantment.EnchantmentHelperMixin",
+    "enchantment.EnchantmentsMixin",
+    "enchantment.EnchantmentsPredicateAccessor",
+    "entity.ItemEntityMixin",
+    "entity.LivingEntityMixin",
+    "entity.player.ItemCooldownManagerAccessor",
+    "entity.player.ItemCooldownManagerEntryAccessor",
+    "entity.player.PlayerEntityMixin",
+    "entity.player.PlayerInventoryMixin",
+    "item.EnderEyeItemMixin",
+    "item.FlintAndSteelItemMixin",
+    "item.ItemGroupMixin",
+    "item.ItemMixin",
+    "item.ItemStackMixin",
+    "item.SmithingTemplateItemAccessor",
+    "item.ToolMaterialMixin",
+    "item.GoldToolMaterialMixin",
+    "item.equipment.ArmorMaterialsAccessor",
+    "loot.function.ApplyBonusLootFunctionMixin",
+    "loot.function.MatchToolLootConditionMixin",
+    "screen.slot.SlotMixin",
+    "server.network.ServerPlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.lixir.pre.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MinecraftClientMixin",
+    "gui.hud.InGameHudMixin",
+    "input.KeyboardInputMixin",
+    "model.BipedEntityRenderStateMixin",
+    "network.ClientPlayerEntityMixin",
+    "render.GameRendererMixin",
+    "render.entity.BipedEntityRendererMixin",
+    "render.entity.model.BipedEntityModelAccessor",
+    "render.entity.model.BipedEntityModelMixin",
+    "render.item.HeldItemRendererMixin",
+    "sound.MusicTrackerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

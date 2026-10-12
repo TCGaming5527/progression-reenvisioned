@@ -1,0 +1,174 @@
+{
+  "pack": {
+    "description": "Datapack",
+    "pack_format": 69
+  },
+  "filter": {
+    "block": [
+      {
+        "namespace": "minecraft",
+        "path": "recipe/mace.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/stone_pickaxe.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_pickaxe_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_axe_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_shovel_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_sword_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_hoe_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_helmet_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_chestplate_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_leggings_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/netherite_boots_smithing.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/stone_axe.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/stone_shovel.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/stone_sword.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/stone_hoe.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_sword.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_pickaxe.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_axe.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_shovel.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_hoe.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_helmet.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_leggings.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_boots.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/diamond_chestplate.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/ender_eye.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/furnace.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/campfire.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/soul_campfire.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/blast_furnace.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/smoker.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/recovery_compass.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/chain.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/leather_helmet.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/leather_chestplate.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/leather_leggings.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/leather_boots.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/grindstone.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/lantern.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/soul_lantern.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/flint_and_steel.json"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/turtle_helmet.json"
+      }
+    ]
+  }
+}

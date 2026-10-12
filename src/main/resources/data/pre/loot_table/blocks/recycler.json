@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pre:recycler"
+        }
+      ]
+    }
+  ],
+  "functions": [],
+  "random_sequence": "pre:blocks/recycler"
+}

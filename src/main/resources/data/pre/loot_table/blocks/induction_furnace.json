@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pre:induction_furnace"
+        }
+      ]
+    }
+  ],
+  "functions": [],
+  "random_sequence": "pre:blocks/induction_furnace"
+}

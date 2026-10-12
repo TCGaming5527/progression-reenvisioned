@@ -1,0 +1,10 @@
+accessWidener v2 named
+
+accessible field net/minecraft/entity/EntityEquipment map Ljava/util/EnumMap;
+accessible class net/minecraft/entity/player/ItemCooldownManager$Entry
+accessible field net/minecraft/client/render/GameRenderer pool Lnet/minecraft/client/util/Pool;
+accessible field net/minecraft/client/render/GameRenderer BLUR_ID Lnet/minecraft/util/Identifier;
+accessible field net/minecraft/loot/context/LootContextTypes MAP Lcom/google/common/collect/BiMap;
+accessible method net/minecraft/component/ComponentMap$Builder put (Lnet/minecraft/component/ComponentType;Ljava/lang/Object;)V
+accessible class net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
+accessible method net/minecraft/block/entity/BlockEntityType <init> (Lnet/minecraft/block/entity/BlockEntityType$BlockEntityFactory;Ljava/util/Set;)V

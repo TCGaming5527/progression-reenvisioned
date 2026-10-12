@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "pre:player_rewinding",
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "pre:item/old_clock_backward",
+      "tints": []
+    },
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "pre:item/old_clock_forward",
+      "tints": []
+    }
+  }
+}
