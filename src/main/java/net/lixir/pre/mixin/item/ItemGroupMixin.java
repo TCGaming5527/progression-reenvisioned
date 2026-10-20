@@ -1,7 +1,7 @@
 package net.lixir.pre.mixin.item;
 
 
-import net.lixir.pre.registry.tag.PREItemTags;
+import net.lixir.pre.common.init.tag.PREItemTags;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

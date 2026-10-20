@@ -1,8 +1,8 @@
 package net.lixir.pre.mixin.loot.function;
 
-import net.lixir.pre.component.PREDataComponentTypes;
-import net.lixir.pre.component.SilkTouchComponent;
-import net.lixir.pre.mixin.enchantment.EnchantmentsPredicateAccessor;
+import net.lixir.pre.common.init.PREDataComponentTypes;
+import net.lixir.pre.common.component.SilkTouchComponent;
+import net.lixir.pre.mixin.accessor.EnchantmentsPredicateAccessor;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;

@@ -2,20 +2,28 @@ package net.lixir.pre.mixin.entity;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.lixir.pre.entity.attribute.PREEntityAttributes;
-import net.lixir.pre.registry.tag.PREDamageTypeTags;
-import net.lixir.pre.registry.tag.PREEntityTypeTags;
+import net.lixir.pre.common.component.entity.RewindComponent;
+import net.lixir.pre.common.init.PREEntityAttributes;
+import net.lixir.pre.common.init.tag.PREDamageTypeTags;
+import net.lixir.pre.common.init.tag.PREEntityTypeTags;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
+public abstract class LivingEntityMixin extends Entity {
+
+    public LivingEntityMixin(EntityType<?> type, World world) {
+        super(type, world);
+    }
 
     @ModifyArg(
             method = "damage",
@@ -114,5 +122,14 @@ public abstract class LivingEntityMixin {
         }
 
         return (float) (amount / protection);
+    }
+
+    @ModifyReturnValue(method = "getEffectiveGravity", at = @At("RETURN"))
+    private double pre$rewindGravity(double original) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+        if (entity instanceof PlayerEntity player && RewindComponent.get(player).isRewinding()) {
+            return 0;
+        }
+        return original;
     }
 }

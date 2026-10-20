@@ -2,8 +2,8 @@ package net.lixir.pre.mixin.loot.function;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.lixir.pre.component.FortuneComponent;
-import net.lixir.pre.component.PREDataComponentTypes;
+import net.lixir.pre.common.component.FortuneComponent;
+import net.lixir.pre.common.init.PREDataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;

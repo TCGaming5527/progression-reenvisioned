@@ -1,35 +1,36 @@
 {
   "schemaVersion": 1,
-  "id": "progressionreenvisioned",
+  "id": "pre",
   "version": "${version}",
   "name": "ProgressionReEnvisioned",
   "description": "Changes the progression enough to be understandable but interesting. Also adds fun trinkets to mess with and QOL Improvements.",
-  "authors": ["lixir, TCGaming55, and mongocat"],
+  "authors": [
+    "lixir",
+    "TCGaming55",
+    "Powercyphe",
+    "mongocat"
+  ],
   "contact": {},
   "license": "All-Rights-Reserved",
   "icon": "assets/pre/icon.png",
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "net.lixir.pre.client.PREDataGenerator"
+      "net.lixir.pre.common.datagen.PREDataGenerator"
     ],
     "client": [
       "net.lixir.pre.client.PREClient"
     ],
     "main": [
-      "net.lixir.pre.ProgressionReEnvisioned"
+      "net.lixir.pre.common.ProgressionReEnvisioned"
     ],
     "cardinal-components-entity": [
-      "net.lixir.pre.component.entity.PREEntityComponents"
+      "net.lixir.pre.common.init.PREEntityComponents"
     ]
   },
   "accessWidener": "pre.accesswidener",
   "mixins": [
-    "pre.mixins.json",
-    {
-      "config": "pre.client.mixins.json",
-      "environment": "client"
-    }
+    "pre.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
@@ -43,10 +44,10 @@
     ],
     "loom:injected_interfaces": {
       "net/minecraft/item/Item": [
-        "net/lixir/pre/duck/item/ItemDuck"
+        "net/lixir/pre/common/duck/item/ItemDuck"
       ],
       "net/minecraft/entity/player/PlayerEntity": [
-        "net/lixir/pre/duck/entity/player/PlayerEntityDuck"
+        "net/lixir/pre/common/duck/entity/player/PlayerEntityDuck"
       ]
     }
   }

@@ -1,7 +1,7 @@
 package net.lixir.pre.mixin.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemStack;
-import net.lixir.pre.component.PREDataComponentTypes;
+import net.lixir.pre.common.init.PREDataComponentTypes;
 import net.minecraft.component.ComponentHolder;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.TooltipDisplayComponent;

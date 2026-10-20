@@ -2,7 +2,7 @@ package net.lixir.pre.mixin.screen.slot;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.lixir.pre.registry.tag.PREItemTags;
+import net.lixir.pre.common.init.tag.PREItemTags;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;

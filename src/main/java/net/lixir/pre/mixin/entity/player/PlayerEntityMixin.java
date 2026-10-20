@@ -1,6 +1,6 @@
 package net.lixir.pre.mixin.entity.player;
 
-import net.lixir.pre.duck.entity.player.PlayerEntityDuck;
+import net.lixir.pre.common.duck.entity.player.PlayerEntityDuck;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
