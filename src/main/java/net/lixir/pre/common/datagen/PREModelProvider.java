@@ -13,6 +13,7 @@ import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.model.json.ModelVariant;
 import net.minecraft.client.render.model.json.WeightedVariant;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.Pool;
@@ -129,6 +130,11 @@ public class PREModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(PREItems.COPPER_AXE, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.COPPER_SHOVEL, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.COPPER_HOE, Models.HANDHELD);
+
+		itemModelGenerator.register(PREItems.COPPER_HELMET, Models.GENERATED);
+		itemModelGenerator.register(PREItems.COPPER_CHESTPLATE, Models.GENERATED);
+		itemModelGenerator.register(PREItems.COPPER_LEGGINGS, Models.GENERATED);
+		itemModelGenerator.register(PREItems.COPPER_BOOTS, Models.GENERATED);
 		//region Electrum
 		itemModelGenerator.register(PREItems.ELECTRUM_INGOT, Models.GENERATED);
 		itemModelGenerator.register(PREItems.ELECTRUM_SWORD, Models.HANDHELD);
@@ -136,6 +142,11 @@ public class PREModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(PREItems.ELECTRUM_AXE, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.ELECTRUM_SHOVEL, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.ELECTRUM_HOE, Models.HANDHELD);
+
+		itemModelGenerator.register(PREItems.ELECTRUM_HELMET, Models.GENERATED);
+		itemModelGenerator.register(PREItems.ELECTRUM_CHESTPLATE, Models.GENERATED);
+		itemModelGenerator.register(PREItems.ELECTRUM_LEGGINGS, Models.GENERATED);
+		itemModelGenerator.register(PREItems.ELECTRUM_BOOTS, Models.GENERATED);
 		//endregion
 		//region Brass
 		itemModelGenerator.register(PREItems.BRASS_INGOT, Models.GENERATED);
@@ -144,6 +155,7 @@ public class PREModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(PREItems.BRASS_AXE, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.BRASS_SHOVEL, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.BRASS_HOE, Models.HANDHELD);
+
 		itemModelGenerator.register(PREItems.BRASS_HELMET, Models.GENERATED);
 		itemModelGenerator.register(PREItems.BRASS_CHESTPLATE, Models.GENERATED);
 		itemModelGenerator.register(PREItems.BRASS_LEGGINGS, Models.GENERATED);
@@ -156,6 +168,7 @@ public class PREModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(PREItems.ROSE_GOLD_AXE, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.ROSE_GOLD_SHOVEL, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.ROSE_GOLD_HOE, Models.HANDHELD);
+
 		itemModelGenerator.register(PREItems.ROSE_GOLD_HELMET, Models.GENERATED);
 		itemModelGenerator.register(PREItems.ROSE_GOLD_CHESTPLATE, Models.GENERATED);
 		itemModelGenerator.register(PREItems.ROSE_GOLD_LEGGINGS, Models.GENERATED);
@@ -184,6 +197,13 @@ public class PREModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(PREItems.VOCALITE_SHOVEL, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.VOCALITE_HOE, Models.HANDHELD);
 		//endregion
+	}
+
+	public static void registerWithVanillaNamespace(ItemModelGenerator gen, Item item, Model model) {
+		gen.output.accept(item, ItemModels.basic(model.upload(
+				ModelIds.getItemModelId(item),
+				TextureMap.layer0(Identifier.ofVanilla(ModelIds.getItemModelId(item).getPath())), gen.modelCollector
+		)));
 	}
 
 

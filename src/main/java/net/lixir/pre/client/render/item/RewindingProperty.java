@@ -17,7 +17,7 @@ public record RewindingProperty() implements BooleanProperty {
 	@Override
 	public boolean test(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed, ItemDisplayContext displayContext) {
 		if (entity instanceof PlayerEntity player) {
-			val rewindData = PREEntityComponents.REWIND_DATA.get(player);
+			val rewindData = PREEntityComponents.REWIND.get(player);
 			return rewindData.isRewinding();
 		}
 		return false;

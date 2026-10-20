@@ -80,14 +80,18 @@ public class TransenderItem extends Item {
                 }
             }
 
-            StopSoundS2CPacket stopSoundS2CPacket = new StopSoundS2CPacket(PRESoundEvents.ITEM_ENDER_EYE_TELEPORT_AMBIENT.id(), SoundCategory.PLAYERS);
+            StopSoundS2CPacket stopAmbient = new StopSoundS2CPacket(PRESoundEvents.ITEM_ENDER_EYE_TELEPORT_AMBIENT.id(), SoundCategory.MASTER);
             for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers(serverPlayerEntity -> serverPlayerEntity.distanceTo(user) < 32)) {
-                serverPlayerEntity.networkHandler.sendPacket(stopSoundS2CPacket);
+                serverPlayerEntity.networkHandler.sendPacket(stopAmbient);
             }
 
             world.playSound(null, tpPos.getX(), tpPos.getY(), tpPos.getZ(), PRESoundEvents.ITEM_TRANSENDER_TELEPORT, SoundCategory.PLAYERS);
-            if (user instanceof PlayerEntity player)
+            if (user instanceof PlayerEntity player && !player.isCreative()) {
                 player.getItemCooldownManager().set(stack, 400);
+                if (player instanceof ServerPlayerEntity serverPlayer) {
+                    serverPlayer.networkHandler.sendPacket(stopAmbient);
+                }
+            }
 
             user.swingHand(user.getActiveHand(), true);
         }

@@ -28,7 +28,7 @@ public abstract class KeyboardInputMixin extends Input {
         if (player == null)
             return;
 
-        val rewindData = PREEntityComponents.REWIND_DATA.get(player);
+        val rewindData = PREEntityComponents.REWIND.get(player);
         val isRewinding = rewindData.isRewinding();
         if (isRewinding) {
             this.playerInput = PlayerInput.DEFAULT;

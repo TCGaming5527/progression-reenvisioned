@@ -12,6 +12,17 @@ public class SpeechHudTypeRegistry {
         MAP.put(SpeechHudTypes.RECYCLER.getId(), RecyclerSpeechHud.INSTANCE);
     }
 
+    public static boolean anyActive() {
+        for (SpeechHud hud : MAP.values()) {
+            if (hud.isActive()) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
     public static SpeechHud getHud(Identifier id) {
         return MAP.get(id);
     }

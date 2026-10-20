@@ -8,6 +8,8 @@ import net.lixir.pre.common.util.easing.TransitionMath;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.world.ClientWorld;
@@ -121,6 +123,8 @@ public abstract class SpeechHud {
 
         context.fillGradient(0, 0, width, height, getCurrentGradientStartColor(), getCurrentGradientEndColor());
         lastCharsToShow = charsToShow;
+
+        context.drawCenteredTextWithShadow(textRenderer, Text.translatable("gui.speech.skip", client.options.inventoryKey.getBoundKeyLocalizedText()), width / 2, height - height / 8, -1);
     }
 
     abstract float getTextWobble();
@@ -153,6 +157,9 @@ public abstract class SpeechHud {
             return;
         speechTicks++;
         if (getSpeechTicks() == getSpeechTickDuration()) {
+            onSpeechEnd();
+        } else if (client.options.inventoryKey.wasPressed()) {
+            while (client.options.inventoryKey.wasPressed()) {}
             onSpeechEnd();
         }
     }

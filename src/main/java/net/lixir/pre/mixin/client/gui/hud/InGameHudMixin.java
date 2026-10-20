@@ -26,7 +26,7 @@ public abstract class InGameHudMixin {
         if (player == null)
             return x;
 
-        val rewindData = PREEntityComponents.REWIND_DATA.get(player);
+        val rewindData = PREEntityComponents.REWIND.get(player);
         val isRewinding = rewindData.isRewinding();
         if (isRewinding) {
             return 0xff0066ff;

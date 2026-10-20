@@ -12,8 +12,8 @@ public final class PREClientEventHooks {
 
     public static void register() {
         HudLayerRegistrationCallback.EVENT.register(layeredDrawer -> {
-                layeredDrawer.attachLayerBefore(IdentifiedLayer.CROSSHAIR, MusicNotifierHud.LAYER, MusicNotifierHud.INSTANCE::onHudRender);
-                layeredDrawer.attachLayerBefore(IdentifiedLayer.CROSSHAIR, ItemPickupNotifierHud.LAYER, ItemPickupNotifierHud.INSTANCE::onHudRender);
+                //layeredDrawer.attachLayerBefore(IdentifiedLayer.CROSSHAIR, MusicNotifierHud.LAYER, MusicNotifierHud.INSTANCE::onHudRender);
+                //layeredDrawer.attachLayerBefore(IdentifiedLayer.CROSSHAIR, ItemPickupNotifierHud.LAYER, ItemPickupNotifierHud.INSTANCE::onHudRender);
                 layeredDrawer.attachLayerBefore(IdentifiedLayer.CROSSHAIR, EnderEyeSpeechHud.LAYER, EnderEyeSpeechHud.INSTANCE::onHudRender);
                 layeredDrawer.attachLayerBefore(IdentifiedLayer.CROSSHAIR, RecyclerSpeechHud.LAYER, RecyclerSpeechHud.INSTANCE::onHudRender);
                 layeredDrawer.attachLayerBefore(IdentifiedLayer.CROSSHAIR, CompassHud.LAYER, CompassHud.INSTANCE::onHudRender);
@@ -23,8 +23,8 @@ public final class PREClientEventHooks {
             if (PREClient.CURRENT_SPEECH != null) {
                 PREClient.CURRENT_SPEECH.tick(minecraftClient);
             }
-            MusicNotifierHud.INSTANCE.tick(minecraftClient);
-            ItemPickupNotifierHud.INSTANCE.tick(minecraftClient);
+            //MusicNotifierHud.INSTANCE.tick(minecraftClient);
+            //ItemPickupNotifierHud.INSTANCE.tick(minecraftClient);
         });
     }
 }

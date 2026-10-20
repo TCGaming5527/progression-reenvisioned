@@ -234,6 +234,9 @@ public class PREEnglishLangProvider extends FabricLanguageProvider {
 		translationBuilder.add("item." + ProgressionReEnvisioned.ID + ".smithing_template.basic_upgrade.additions_slot_description", "Add Tier 2 Materials");
 		translationBuilder.add("item." + ProgressionReEnvisioned.ID + ".smithing_template.basic_upgrade.base_slot_description", "Add Tier 1 armor, weapon, or tool");
 		translationBuilder.add("item." + ProgressionReEnvisioned.ID + ".smithing_template.basic_upgrade.ingredients", "Tier 2 Material");
+
+		translationBuilder.add("gui.speech.skip", "Press %1$s to skip");
+
 		translationBuilder.add("item.minecraft.ender_eye.speech.0", "I’ve seen all and I am all");
 		translationBuilder.add("item.minecraft.ender_eye.speech.1", "For you, your power stands tall");
 		translationBuilder.add("item.minecraft.ender_eye.speech.2", "Now I shall entrust you with this");
@@ -244,6 +247,8 @@ public class PREEnglishLangProvider extends FabricLanguageProvider {
 		translationBuilder.add("item.minecraft.ender_eye.speech.7", "And I shall leave you to your soaring stunts");
 		translationBuilder.add("item.minecraft.ender_eye.speech.8", "The location you seek is deep below");
 		translationBuilder.add("item.minecraft.ender_eye.speech.9", "But with these coordinates I shall show");
+
+
 		translationBuilder.add("tooltip.silk_touch", "Silk Touch");
 		translationBuilder.add("tooltip.fortune", "Fortune");
 		translationBuilder.add("item.pre.recovers_inventory_using_amethyst", "Recovers 100 items per 1 Amethyst Shard in inventory on death");
