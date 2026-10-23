@@ -42,6 +42,18 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         .criterion("has_echo_shard", conditionsFromItem(Items.ECHO_SHARD))
                         .criterion("has_ender_pearl", conditionsFromItem(Items.ENDER_PEARL))
                         .offerTo(this.exporter, vanillaRegistryKey("ender_eye"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.LANTERN, 4)
+                        .input(Items.TORCH, 1)
+                        .input(Items.IRON_INGOT, 1)
+                        .criterion("has_torch", conditionsFromItem(Items.TORCH))
+                        .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+                        .offerTo(this.exporter, vanillaRegistryKey("lantern"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.SOUL_LANTERN, 4)
+                        .input(Items.SOUL_TORCH, 1)
+                        .input(Items.IRON_INGOT, 1)
+                        .criterion("has_soul_torch", conditionsFromItem(Items.SOUL_TORCH))
+                        .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+                        .offerTo(this.exporter, vanillaRegistryKey("soul_lantern"));
                 createShaped(
                             RecipeCategory.BUILDING_BLOCKS,
                             Items.CAMPFIRE
@@ -56,6 +68,32 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                                 this.exporter,
                                 vanillaRegistryKey("campfire")
                          );
+                createShaped(
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Items.SOUL_CAMPFIRE
+                )
+                        .pattern("SS")
+                        .pattern("LL")
+                        .input('S', ItemTags.SOUL_FIRE_BASE_BLOCKS)
+                        .input('L', ItemTags.LOGS_THAT_BURN)
+                        .criterion("has_stick", conditionsFromItem(ItemTags.SOUL_FIRE_BASE_BLOCKS))
+                        .criterion("has_log", conditionsFromTag(ItemTags.LOGS_THAT_BURN))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("soul_campfire")
+                        );
+                createShaped(
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Items.CHAIN
+                )
+                        .pattern("S")
+                        .pattern("S")
+                        .input('S', Items.IRON_INGOT)
+                        .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("chain")
+                        );
             }
         };
     }
