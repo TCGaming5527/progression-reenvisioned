@@ -1,6 +1,5 @@
 package net.lixir.pre.mixin.client.gui.hud;
 
-import lombok.val;
 import net.lixir.pre.common.init.PREEntityComponents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -26,8 +25,8 @@ public abstract class InGameHudMixin {
         if (player == null)
             return x;
 
-        val rewindData = PREEntityComponents.REWIND.get(player);
-        val isRewinding = rewindData.isRewinding();
+        var rewindData = PREEntityComponents.REWIND.get(player);
+        var isRewinding = rewindData.isRewinding();
         if (isRewinding) {
             return 0xff0066ff;
         }

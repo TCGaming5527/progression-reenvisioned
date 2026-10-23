@@ -27,6 +27,7 @@
     "item.ItemGroupMixin",
     "item.ItemMixin",
     "item.ItemStackMixin",
+    "item.RarityMixin",
     "item.ToolMaterialMixin",
     "loot.function.ApplyBonusLootFunctionMixin",
     "loot.function.MatchToolLootConditionMixin",

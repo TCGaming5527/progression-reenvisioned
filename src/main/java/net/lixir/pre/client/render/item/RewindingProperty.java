@@ -1,7 +1,6 @@
 package net.lixir.pre.client.render.item;
 
 import com.mojang.serialization.MapCodec;
-import lombok.val;
 import net.lixir.pre.common.init.PREEntityComponents;
 import net.minecraft.client.render.item.property.bool.BooleanProperty;
 import net.minecraft.client.world.ClientWorld;
@@ -17,7 +16,7 @@ public record RewindingProperty() implements BooleanProperty {
 	@Override
 	public boolean test(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed, ItemDisplayContext displayContext) {
 		if (entity instanceof PlayerEntity player) {
-			val rewindData = PREEntityComponents.REWIND.get(player);
+			var rewindData = PREEntityComponents.REWIND.get(player);
 			return rewindData.isRewinding();
 		}
 		return false;

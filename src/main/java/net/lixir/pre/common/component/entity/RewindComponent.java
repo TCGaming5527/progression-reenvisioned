@@ -1,6 +1,5 @@
 package net.lixir.pre.common.component.entity;
 
-import lombok.val;
 import net.lixir.pre.common.init.PREEntityComponents;
 import net.lixir.pre.common.item.OldClockItem;
 import net.minecraft.entity.player.PlayerEntity;
@@ -110,7 +109,7 @@ public class RewindComponent implements CommonTickingComponent, AutoSyncedCompon
 
     @Override
     public void writeToNbt(@NotNull NbtCompound nbt, RegistryWrapper.WrapperLookup wrapperLookup) {
-        val timelineTag = new NbtList();
+        var timelineTag = new NbtList();
         for (Vec3d pos : this.timeline) {
             NbtCompound compound = new NbtCompound();
             compound.putDouble("X", pos.getX());

@@ -1,13 +1,17 @@
 package net.lixir.pre.mixin.client;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.lixir.pre.common.item.SpearItem;
+import net.lixir.pre.common.item.TransenderItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.hit.EntityHitResult;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,5 +38,11 @@ public abstract class MinecraftClientMixin {
         if (item instanceof SpearItem spearItem && !spearItem.canAttack(this.player, stack, getRenderTickCounter().getTickProgress(false)))
             return false;
         return original.call(instance);
+    }
+
+    @ModifyReturnValue(method = "hasOutline", at = @At("RETURN"))
+    private boolean pre$transenderGlow(boolean original, Entity entity) {
+        return original || (TransenderItem.isUsing(this.player)
+                && TransenderItem.getTpPos(this.player) instanceof EntityHitResult entityHit && entityHit.getEntity() == entity);
     }
 }

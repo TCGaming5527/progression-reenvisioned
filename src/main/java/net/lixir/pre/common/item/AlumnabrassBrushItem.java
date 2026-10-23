@@ -1,6 +1,5 @@
 package net.lixir.pre.common.item;
 
-import lombok.val;
 import net.lixir.pre.common.init.PREBlocks;
 import net.lixir.pre.common.init.PREDataComponentTypes;
 import net.minecraft.entity.Entity;
@@ -59,7 +58,7 @@ public class AlumnabrassBrushItem extends Item {
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (world.isClient) {
-            val targetPos = getTargetPos(user, world);
+            var targetPos = getTargetPos(user, world);
             preview(user, targetPos);
         }
         super.usageTick(world, user, stack, remainingUseTicks);
@@ -67,7 +66,7 @@ public class AlumnabrassBrushItem extends Item {
 
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        val stack = user.getStackInHand(hand);
+        var stack = user.getStackInHand(hand);
         if (this.getCharge(stack) > 0 || user.isCreative()) {
             user.setCurrentHand(hand);
             return ActionResult.CONSUME;
@@ -77,7 +76,7 @@ public class AlumnabrassBrushItem extends Item {
 
     @Override
     public boolean onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        val targetPos = getTargetPos(user, world);
+        var targetPos = getTargetPos(user, world);
 
         if (!world.isClient) {
             createPlatform(world, targetPos);
@@ -117,21 +116,21 @@ public class AlumnabrassBrushItem extends Item {
     }
 
     private BlockPos getTargetPos(LivingEntity user, World world) {
-        val start = user.getEyePos();
-        val end = start.add(user.getRotationVector().multiply(3.0));
-        val context = new RaycastContext(start, end,
+        var start = user.getEyePos();
+        var end = start.add(user.getRotationVector().multiply(3.0));
+        var context = new RaycastContext(start, end,
                 RaycastContext.ShapeType.COLLIDER,
                 RaycastContext.FluidHandling.ANY,
                 user);
-        val hitResult = world.raycast(context);
+        var hitResult = world.raycast(context);
         return hitResult != null ? hitResult.getBlockPos() : BlockPos.ofFloored(start.add(end));
     }
 
 
     private void preview(LivingEntity user, BlockPos pos) {
-        val random = user.getRandom();
-        val center = pos.toCenterPos();
-        val world = user.getWorld();
+        var random = user.getRandom();
+        var center = pos.toCenterPos();
+        var world = user.getWorld();
         for (int i = 0; i < random.nextBetween(7, 9); i++) {
             double x = (center.x + ((random.nextFloat() - 0.5f) * 3));
             double y = (center.y + random.nextFloat() - 0.5f);
@@ -149,8 +148,8 @@ public class AlumnabrassBrushItem extends Item {
     private void createPlatform(World world, BlockPos pos) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                val platPos = pos.add(i, 0, j);
-                val state = world.getBlockState(platPos);
+                var platPos = pos.add(i, 0, j);
+                var state = world.getBlockState(platPos);
                 if (state.isAir() || state.isReplaceable()) {
                     world.setBlockState(platPos, PREBlocks.PLATFORM.getDefaultState());
                 }

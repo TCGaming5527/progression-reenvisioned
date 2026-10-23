@@ -1,4 +1,4 @@
-package net.lixir.pre.common.entity.player;
+package net.lixir.pre.common.util;
 
 import net.lixir.pre.mixin.accessor.ItemCooldownManagerAccessor;
 import net.minecraft.entity.player.ItemCooldownManager;

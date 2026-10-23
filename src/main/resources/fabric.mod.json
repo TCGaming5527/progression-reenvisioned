@@ -28,7 +28,7 @@
       "net.lixir.pre.common.init.PREEntityComponents"
     ]
   },
-  "accessWidener": "pre.accesswidener",
+  "accessWidener": "pre.classtweaker",
   "mixins": [
     "pre.mixins.json"
   ],

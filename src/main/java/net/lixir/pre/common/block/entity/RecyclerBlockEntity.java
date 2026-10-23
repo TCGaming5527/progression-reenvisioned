@@ -1,6 +1,5 @@
 package net.lixir.pre.common.block.entity;
 
-import lombok.Getter;
 import net.lixir.pre.common.block.RecyclerBlock;
 import net.lixir.pre.common.data.RecyclableItem;
 import net.lixir.pre.common.data.RecyclableItemDataLoader;
@@ -36,7 +35,6 @@ public class RecyclerBlockEntity extends BlockEntity
         implements SidedInventory {
 
     private static final int[] SLOT = new int[]{0};
-    @Getter
     private int openTicks = 0;
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
@@ -52,6 +50,10 @@ public class RecyclerBlockEntity extends BlockEntity
                 be.closeBlock();
             }
         }
+    }
+
+    public int getOpenTicks() {
+        return openTicks;
     }
 
     @Override

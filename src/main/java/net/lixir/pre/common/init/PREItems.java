@@ -7,6 +7,7 @@ import net.lixir.pre.common.ProgressionReEnvisioned;
 import net.lixir.pre.common.component.FortuneComponent;
 import net.lixir.pre.common.component.SilkTouchComponent;
 import net.lixir.pre.common.item.*;
+import net.lixir.pre.common.util.SmithingTemplateUtil;
 import net.minecraft.block.Block;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -42,21 +43,23 @@ public final class PREItems {
     public static final Item VOCALITE_INGOT = register("vocalite_ingot");
     public static final Item BRASS_INGOT = register("brass_ingot");
     public static final Item ROSE_GOLD_INGOT = register("rose_gold_ingot");
-    public static final Item OLD_CLOCK = register("old_clock", OldClockItem::new, new Item.Settings().maxCount(1).maxDamage(30).rarity(Rarity.EPIC).repairable(Items.CLOCK));
-    public static final Item TRANSENDER = register("transender", TransenderItem::new, new Item.Settings().maxCount(1).rarity(Rarity.EPIC));
+    public static final Item OLD_CLOCK = register("old_clock", OldClockItem::new, new Item.Settings().maxCount(1).maxDamage(30)
+            .rarity(Rarity.PROGRESSION_REENVISIONED_RELIC).repairable(Items.CLOCK));
+    public static final Item TRANSENDER = register("transender", TransenderItem::new, new Item.Settings().maxCount(1)
+            .rarity(Rarity.PROGRESSION_REENVISIONED_RELIC));
     public static final Item ALUMNABRASS_BRUSH = register(
             "alumnabrass_brush",
             AlumnabrassBrushItem::new,
             new Item.Settings()
                     .maxCount(1)
-                    .rarity(Rarity.EPIC)
+                    .rarity(Rarity.PROGRESSION_REENVISIONED_RELIC)
                     .component(PREDataComponentTypes.MAX_CHARGE, 4)
                     .component(PREDataComponentTypes.CHARGING_TICKS, 0)
                     .component(PREDataComponentTypes.MAX_CHARGING_TICKS, 150)
     );
     public static final Item ELECTRUM_SPEAR = register("electrum_spear", SpearItem::new,
             new Item.Settings()
-                    .rarity(Rarity.EPIC)
+                    .rarity(Rarity.PROGRESSION_REENVISIONED_RELIC)
                     .maxCount(1)
                     .enchantable(15)
                     .maxDamage(2031)
@@ -65,7 +68,7 @@ public final class PREItems {
     );
     public static final Item NETHERITE_SPEAR = register("netherite_spear", SpearItem::new,
             new Item.Settings()
-                    .rarity(Rarity.EPIC)
+                    .rarity(Rarity.PROGRESSION_REENVISIONED_RELIC)
                     .maxCount(1)
                     .enchantable(15)
                     .maxDamage(2031)
@@ -74,7 +77,7 @@ public final class PREItems {
     );
     public static final Item ALUMNABRASS_SPEAR = register("alumnabrass_spear", SpearItem::new,
             new Item.Settings()
-                    .rarity(Rarity.EPIC)
+                    .rarity(Rarity.PROGRESSION_REENVISIONED_RELIC)
                     .maxCount(1)
                     .enchantable(15)
                     .maxDamage(2031)
@@ -83,7 +86,7 @@ public final class PREItems {
     );
     public static final Item VOCALITE_SPEAR = register("vocalite_spear", SpearItem::new,
             new Item.Settings()
-                    .rarity(Rarity.EPIC)
+                    .rarity(Rarity.PROGRESSION_REENVISIONED_RELIC)
                     .maxCount(1)
                     .enchantable(15)
                     .maxDamage(2031)
@@ -98,24 +101,31 @@ public final class PREItems {
             SmithingTemplateUtil::createBasicSmithingTemplate,
             new Item.Settings().rarity(Rarity.UNCOMMON)
     );
-    public static final Item ELECTRUM_HELMET = register("electrum_helmet", Item::new, new Item.Settings().armor(PREArmorMaterials.ELECTRUM, EquipmentType.HELMET));
+    public static final Item ELECTRUM_HELMET = register(
+            "electrum_helmet", Item::new, new Item.Settings()
+                    .armor(PREArmorMaterials.ELECTRUM, EquipmentType.HELMET));
     public static final Item ELECTRUM_CHESTPLATE = register(
-            "electrum_chestplate", Item::new, new Item.Settings().armor(PREArmorMaterials.ELECTRUM, EquipmentType.CHESTPLATE)
+            "electrum_chestplate", Item::new, new Item.Settings()
+                    .armor(PREArmorMaterials.ELECTRUM, EquipmentType.CHESTPLATE)
     );
     public static final Item ELECTRUM_LEGGINGS = register(
-            "electrum_leggings", Item::new, new Item.Settings().armor(PREArmorMaterials.ELECTRUM, EquipmentType.LEGGINGS)
+            "electrum_leggings", Item::new, new Item.Settings()
+                    .armor(PREArmorMaterials.ELECTRUM, EquipmentType.LEGGINGS)
     );
-    public static final Item ELECTRUM_BOOTS = register("electrum_boots", Item::new, new Item.Settings().armor(PREArmorMaterials.ELECTRUM, EquipmentType.BOOTS));
-    public static final Item ELECTRUM_SWORD = register("electrum_sword", new Item.Settings().sword(PREToolMaterials.ELECTRUM, 3.0F, -2.4F).component(PREDataComponentTypes.SILK_TOUCH, new SilkTouchComponent(true)));
+    public static final Item ELECTRUM_BOOTS = register(
+            "electrum_boots", Item::new, new Item.Settings()
+                    .armor(PREArmorMaterials.ELECTRUM, EquipmentType.BOOTS)
+    );
+    public static final Item ELECTRUM_SWORD = register("electrum_sword", new Item.Settings().sword(PREToolMaterials.ELECTRUM, 3.0F, -2.4F));
     public static final Item ELECTRUM_SHOVEL = register(
-            "electrum_shovel", settings -> new ShovelItem(PREToolMaterials.ELECTRUM, 1.5F, -3.0F, settings), new Item.Settings().component(PREDataComponentTypes.SILK_TOUCH, new SilkTouchComponent(true))
+            "electrum_shovel", settings -> new ShovelItem(PREToolMaterials.ELECTRUM, 1.5F, -3.0F, settings), new Item.Settings()
     );
-    public static final Item ELECTRUM_PICKAXE = register("electrum_pickaxe", new Item.Settings().pickaxe(PREToolMaterials.ELECTRUM, 1.0F, -2.8F).component(PREDataComponentTypes.SILK_TOUCH, new SilkTouchComponent(true)));
+    public static final Item ELECTRUM_PICKAXE = register("electrum_pickaxe", new Item.Settings().pickaxe(PREToolMaterials.ELECTRUM, 1.0F, -2.8F));
     public static final Item ELECTRUM_AXE = register(
-            "electrum_axe", settings -> new AxeItem(PREToolMaterials.ELECTRUM, 5.0F, -3.0F, settings), new Item.Settings().component(PREDataComponentTypes.SILK_TOUCH, new SilkTouchComponent(true))
+            "electrum_axe", settings -> new AxeItem(PREToolMaterials.ELECTRUM, 5.0F, -3.0F, settings), new Item.Settings()
     );
     public static final Item ELECTRUM_HOE = register(
-            "electrum_hoe", settings -> new HoeItem(PREToolMaterials.ELECTRUM, -4.0F, 0.0F, settings), new Item.Settings().component(PREDataComponentTypes.SILK_TOUCH, new SilkTouchComponent(true))
+            "electrum_hoe", settings -> new HoeItem(PREToolMaterials.ELECTRUM, -4.0F, 0.0F, settings), new Item.Settings()
     );
 
     public static final Item ALUMNABRASS_HELMET = register(
@@ -254,6 +264,7 @@ public final class PREItems {
     public static final Identifier BASE_WILD_DAMAGE_MODIFIER_ID = ProgressionReEnvisioned.id("base_wild_damage");
     public static final Identifier BASE_UNDEAD_DAMAGE_MODIFIER_ID = ProgressionReEnvisioned.id("base_undead_damage");
     public static final Identifier BASE_NETHER_DAMAGE_MODIFIER_ID = ProgressionReEnvisioned.id("base_nether_damage");
+    public static final Identifier BASE_BLOCK_INTERACTION_RANGE_MODIFIER_ID = ProgressionReEnvisioned.id("base_block_interaction_range_modifier");
     public static final Identifier BASE_ENTITY_INTERACTION_RANGE_MODIFIER_ID = ProgressionReEnvisioned.id("base_entity_interaction_range_modifier");
 
     private PREItems() {
@@ -349,6 +360,11 @@ public final class PREItems {
                 .add(
                         PREEntityAttributes.FIRE_PROTECTION,
                         new EntityAttributeModifier(BASE_FIRE_PROTECTION_MODIFIER_ID, 0.15, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                        slot
+                )
+                .add(
+                        EntityAttributes.BLOCK_INTERACTION_RANGE,
+                        new EntityAttributeModifier(BASE_BLOCK_INTERACTION_RANGE_MODIFIER_ID, 1, EntityAttributeModifier.Operation.ADD_VALUE),
                         slot
                 )
                 .build();
@@ -673,11 +689,14 @@ public final class PREItems {
                             RegistryEntryList.of(
                                     Items.NETHERITE_INGOT.getRegistryEntry()
                             )
-                    )).add(DataComponentTypes.ATTRIBUTE_MODIFIERS, createNetheriteMaceAttributes()));
+                    )).add(DataComponentTypes.ATTRIBUTE_MODIFIERS, createNetheriteMaceAttributes())
+                    .put(DataComponentTypes.RARITY, Rarity.PROGRESSION_REENVISIONED_RELIC));
             context.modify(Items.ENDER_EYE, builder -> builder.add(
                     DataComponentTypes.RARITY,
                     Rarity.UNCOMMON
             ));
+            context.modify(Items.RECOVERY_COMPASS, builder ->
+                    builder.put(DataComponentTypes.RARITY, Rarity.PROGRESSION_REENVISIONED_RELIC));
             context.modify(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, builder -> builder.add(
                     DataComponentTypes.RARITY,
                     Rarity.RARE

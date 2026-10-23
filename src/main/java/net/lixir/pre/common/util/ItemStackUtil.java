@@ -1,4 +1,4 @@
-package net.lixir.pre.common.item;
+package net.lixir.pre.common.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;

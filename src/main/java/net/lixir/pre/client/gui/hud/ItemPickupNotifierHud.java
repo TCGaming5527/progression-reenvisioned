@@ -2,7 +2,6 @@ package net.lixir.pre.client.gui.hud;
 
 import easing.EasingTypes;
 import easing.tween.TweenFunction;
-import lombok.val;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.lixir.pre.common.ProgressionReEnvisioned;
 import net.lixir.pre.common.payload.ItemPickupNotifierPayload;
@@ -34,9 +33,9 @@ public class ItemPickupNotifierHud {
     }
 
     public void onPayloadReceived(@NotNull ItemPickupNotifierPayload payload, ClientPlayNetworking.Context ctx) {
-        val item = payload.item();
-        val count = payload.count();
-        val notifier = new Notifier(item, count);
+        var item = payload.item();
+        var count = payload.count();
+        var notifier = new Notifier(item, count);
         NOTIFIERS.add(notifier);
     }
 
@@ -46,7 +45,7 @@ public class ItemPickupNotifierHud {
         int height = client.getWindow().getScaledHeight();
 
         for (int i = 0; i < NOTIFIERS.size(); i++) {
-            val notifier = NOTIFIERS.get(i);
+            var notifier = NOTIFIERS.get(i);
             notifier.render(context, tickCounter, -100, -6 + (height - 16) - i * 18);
         }
     }
@@ -82,14 +81,14 @@ public class ItemPickupNotifierHud {
             matrices.push();
             float partial = tickCounter.getTickProgress(false);
             float animAge = age + partial;
-            val transition = new TweenFunction(
+            var transition = new TweenFunction(
                     TRANSITION_IN_TICKS / (float) LIFETIME,
                     TRANSITION_OUT_TICKS / (float) LIFETIME,
                     EasingTypes.EASE_IN_CUBIC,
                     EasingTypes.EASE_OUT_CUBIC
             );
-            float val = transition.apply(animAge / LIFETIME);
-            matrices.translate(102 * val, 0, 0);
+            float var = transition.apply(animAge / LIFETIME);
+            matrices.translate(102 * var, 0, 0);
             context.drawGuiTexture(
                     RenderLayer::getGuiTextured,
                     TEXTURE,
@@ -125,7 +124,7 @@ public class ItemPickupNotifierHud {
 
             matrices.push();
             matrices.translate(
-                    x + 18 + 102 * val,
+                    x + 18 + 102 * var,
                     y - ((textRenderer.fontHeight * lines.size() * scaling) / 2f) + 8,
                     0
             );

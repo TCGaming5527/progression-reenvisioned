@@ -24,11 +24,13 @@ public class PREBlocks {
                     .hardness(-1f)
                     .nonOpaque()
                     .dropsNothing()
+                    .suffocates((a, b, c) -> false)
                     .emissiveLighting((state, world, pos) -> true)
     );
     public static final Block RECYCLER = register("recycler", RecyclerBlock::new, AbstractBlock.Settings.create()
             .sounds(BlockSoundGroup.VAULT).resistance(1f).hardness(1f));
-    public static final Block INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlock::new, AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE));
+    public static final Block INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlock::new,
+            AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE));
 
     private static RegistryKey<Block> keyOf(String id) {
         return RegistryKey.of(RegistryKeys.BLOCK, ProgressionReEnvisioned.id(id));

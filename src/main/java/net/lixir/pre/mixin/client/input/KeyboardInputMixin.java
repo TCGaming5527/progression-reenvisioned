@@ -1,6 +1,5 @@
 package net.lixir.pre.mixin.client.input;
 
-import lombok.val;
 import net.lixir.pre.common.init.PREEntityComponents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.input.Input;
@@ -28,8 +27,8 @@ public abstract class KeyboardInputMixin extends Input {
         if (player == null)
             return;
 
-        val rewindData = PREEntityComponents.REWIND.get(player);
-        val isRewinding = rewindData.isRewinding();
+        var rewindData = PREEntityComponents.REWIND.get(player);
+        var isRewinding = rewindData.isRewinding();
         if (isRewinding) {
             this.playerInput = PlayerInput.DEFAULT;
             this.movementVector = Vec2f.ZERO;

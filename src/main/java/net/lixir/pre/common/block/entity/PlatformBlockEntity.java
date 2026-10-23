@@ -1,6 +1,5 @@
 package net.lixir.pre.common.block.entity;
 
-import lombok.Getter;
 import net.lixir.pre.common.block.PlatformBlock;
 import net.lixir.pre.common.init.PREBlockEntityTypes;
 import net.minecraft.block.BlockState;
@@ -14,7 +13,6 @@ import net.minecraft.world.World;
 public class PlatformBlockEntity extends BlockEntity {
     public static final int LIFETIME = 700;
     public static final int BLINK_START = LIFETIME - 80;
-    @Getter
     private int age = 0;
 
     public PlatformBlockEntity(BlockPos pos, BlockState state) {
@@ -30,6 +28,10 @@ public class PlatformBlockEntity extends BlockEntity {
                 world.setBlockState(pos, state.with(PlatformBlock.BLINKING, true));
             }
         }
+    }
+
+    public int getAge() {
+        return age;
     }
 
     @Override

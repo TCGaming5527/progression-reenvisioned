@@ -2,7 +2,6 @@ package net.lixir.pre.client.gui.hud;
 
 import easing.EasingTypes;
 import easing.tween.TweenFunction;
-import lombok.val;
 import net.lixir.pre.common.ProgressionReEnvisioned;
 import net.lixir.pre.common.util.EvictingList;
 import net.minecraft.client.MinecraftClient;
@@ -42,10 +41,10 @@ public class MusicNotifierHud {
     }
 
     public void addNotifier(SoundInstance instance) {
-        val text = buildMusicText(instance);
-        val artistText = buildMusicArtistText(instance);
+        var text = buildMusicText(instance);
+        var artistText = buildMusicArtistText(instance);
         if (text == null || artistText == null) return;
-        val notifier = new Notifier(text, artistText);
+        var notifier = new Notifier(text, artistText);
         NOTIFIERS.add(notifier);
     }
 
@@ -111,7 +110,7 @@ public class MusicNotifierHud {
         int height = client.getWindow().getScaledHeight();
 
         for (int i = 0; i < NOTIFIERS.size(); i++) {
-            val notifier = NOTIFIERS.get(i);
+            var notifier = NOTIFIERS.get(i);
             notifier.render(context, tickCounter, -63, 4 + i * 18);
         }
     }
@@ -151,15 +150,15 @@ public class MusicNotifierHud {
             matrices.push();
             float partial = tickCounter.getTickProgress(false);
             float animAge = age + partial;
-            val transition = new TweenFunction(
+            var transition = new TweenFunction(
                     TRANSITION_IN_TICKS / (float) LIFETIME,
                     TRANSITION_OUT_TICKS / (float) LIFETIME,
                     EasingTypes.EASE_IN_CUBIC,
                     EasingTypes.EASE_OUT_CUBIC
             );
 
-            float val = transition.apply(animAge / LIFETIME);
-            matrices.translate(67 * val, 0, 0);
+            float var = transition.apply(animAge / LIFETIME);
+            matrices.translate(67 * var, 0, 0);
             context.drawGuiTexture(
                     RenderLayer::getGuiTextured,
                     TEXTURES.get(world.getRegistryKey()),
@@ -192,7 +191,7 @@ public class MusicNotifierHud {
 
             matrices.push();
             matrices.translate(
-                    x + 70 * val,
+                    x + 70 * var,
                     (y + 1) - totalHeight / 2f + 8,
                     0
             );

@@ -1,6 +1,5 @@
 package net.lixir.pre.common.datagen;
 
-import lombok.val;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.lixir.pre.common.ProgressionReEnvisioned;
@@ -36,16 +35,16 @@ public class PREModelProvider extends FabricModelProvider {
 	}
 
 	private void generatePlatform(@NotNull BlockStateModelGenerator generator, Block block) {
-		val blockId = Registries.BLOCK.getId(block);
-		val namespace = blockId.getNamespace();
-		val path = blockId.getPath();
+		var blockId = Registries.BLOCK.getId(block);
+		var namespace = blockId.getNamespace();
+		var path = blockId.getPath();
 
 		var model = Models.CUBE_ALL.upload(
 				block,
 				TextureMap.all(block),
 				generator.modelCollector
 		);
-		val blinkingId = Identifier.of(namespace, "block/" + path + "_blinking");
+		var blinkingId = Identifier.of(namespace, "block/" + path + "_blinking");
 		var blinkingModel = Models.CUBE_ALL.upload(
 				blinkingId,
 				TextureMap.all(blinkingId),

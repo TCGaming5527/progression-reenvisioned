@@ -1,7 +1,5 @@
 package net.lixir.pre.client.gui.hud;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.lixir.pre.client.PREClient;
 import net.lixir.pre.common.init.PRESoundEvents;
 import net.lixir.pre.common.util.easing.TransitionMath;
@@ -22,25 +20,21 @@ import java.util.List;
 import static java.lang.Math.min;
 
 public abstract class SpeechHud {
+    public final MinecraftClient client;
 
     private final int gradientColorStart;
     private final int gradientColorEnd;
-    @Getter
-    private final float fadeInPercentage;
-    @Getter
-    private final float fadeOutPercentage;
-    public final MinecraftClient client;
-    @Getter
-    private final List<Text> speech;
-    @Getter
-    private final int speechTickDuration;
-    @Getter
-    private final int textColor;
-    @Getter
-    private int speechTicks = 0;
 
-    @Setter
-    @Getter
+    private final float fadeInPercentage;
+    private final float fadeOutPercentage;
+
+    private final List<Text> speech;
+
+    private int speechTicks = 0;
+    private final int speechTickDuration;
+
+    private final int textColor;
+
     private boolean active = false;
 
     protected SpeechHud(
@@ -143,6 +137,39 @@ public abstract class SpeechHud {
 
     public float getSpeechProgress() {
         return (float) getSpeechTicks() / getSpeechTickDuration();
+    }
+
+
+    public final void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public final boolean isActive() {
+        return active;
+    }
+
+    public List<Text> getSpeech() {
+        return speech;
+    }
+
+    public float getFadeInPercentage() {
+        return fadeInPercentage;
+    }
+
+    public float getFadeOutPercentage() {
+        return fadeOutPercentage;
+    }
+
+    public int getSpeechTicks() {
+        return speechTicks;
+    }
+
+    public int getSpeechTickDuration() {
+        return speechTickDuration;
+    }
+
+    public int getTextColor() {
+        return textColor;
     }
 
     public void activate() {

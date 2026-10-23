@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11.8'
+    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
     id 'maven-publish'
     id 'idea'
 }
@@ -26,7 +26,8 @@ repositories {
 
 
 loom {
-    accessWidenerPath = file("src/main/resources/pre.accesswidener")
+    accessWidenerPath = file("src/main/resources/pre.classtweaker")
+
 }
 
 fabricApi {
@@ -40,17 +41,14 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 
-    implementation 'org.codeberg.lixir:Lychee:9919e3ef58'
-    include 'org.codeberg.lixir:Lychee:9919e3ef58'
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    implementation 'org.codeberg.lixir:Lychee:9919e3ef58'
+    include 'org.codeberg.lixir:Lychee:9919e3ef58'
+
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
-
-    compileOnly 'org.projectlombok:lombok:1.18.34'
-    annotationProcessor 'org.projectlombok:lombok:1.18.34'
-    include "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
-    include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
 }
 
 

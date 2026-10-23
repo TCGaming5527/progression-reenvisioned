@@ -1,6 +1,7 @@
 package net.lixir.pre.common.item;
 
-import net.lixir.pre.common.entity.player.ItemManagerCooldownUtil;
+import net.lixir.pre.common.init.PREItems;
+import net.lixir.pre.common.util.ItemManagerCooldownUtil;
 import net.lixir.pre.common.init.PRESoundEvents;
 import net.lixir.pre.common.payload.PlayItemUseSoundPayload;
 import net.lixir.pre.common.util.PREUtil;
@@ -16,7 +17,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -56,7 +60,7 @@ public class TransenderItem extends Item {
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         super.usageTick(world, user, stack, remainingUseTicks);
         Random random = world.getRandom();
-        Vec3d tpPos = getTpPos(user);
+        Vec3d tpPos = getTpPos(user).getPos();
 
         float width = user.getWidth();
         float height = user.getHeight();
@@ -76,20 +80,23 @@ public class TransenderItem extends Item {
 
     @Override
     public boolean onStoppedUsing(ItemStack stack, @NotNull World world, LivingEntity user, int remainingUseTicks) {
-        Vec3d tpPos = getTpPos(user);
+        HitResult result = getTpPos(user);
+        Vec3d tpPos = result.getPos();
 
         user.setPosition(tpPos.x, tpPos.y, tpPos.z);
         if (world instanceof ServerWorld serverWorld) {
-            if (user instanceof PlayerEntity player) {
-                List<Entity> entities = world.getOtherEntities(user, user.getBoundingBox(), entity -> entity instanceof LivingEntity living && living.isAlive());
-                for (Entity entity : entities) {
-                    entity.damage(serverWorld, world.getDamageSources().playerAttack(player), 15.0f);
-                }
+            boolean hitEntity = false;
+
+            if (result instanceof EntityHitResult entityHit) {
+                hitEntity = true;
+
+                Entity entity = entityHit.getEntity();
+                entity.damage(serverWorld, user.getDamageSources().indirectMagic(user, user), 6F);
             }
 
             world.playSound(null, tpPos.getX(), tpPos.getY(), tpPos.getZ(), PRESoundEvents.ITEM_TRANSENDER_TELEPORT, SoundCategory.PLAYERS);
             if (user instanceof PlayerEntity player && !player.isCreative()) {
-                player.getItemCooldownManager().set(stack, 400);
+                player.getItemCooldownManager().set(stack, hitEntity ? 200 : 400);
             }
 
             user.swingHand(user.getActiveHand(), true);
@@ -98,9 +105,11 @@ public class TransenderItem extends Item {
         return super.onStoppedUsing(stack, world, user, remainingUseTicks);
     }
 
+    public static boolean isUsing(LivingEntity user) {
+        return user != null && user.isUsingItem() && user.getActiveItem().isOf(PREItems.TRANSENDER);
+    }
 
-    @Unique
-    public Vec3d getTpPos(@NotNull LivingEntity user) {
+    public static HitResult getTpPos(@NotNull LivingEntity user) {
         World world = user.getWorld();
 
         Vec3d start = user.getCameraPosVec(1.0F);
@@ -123,11 +132,10 @@ public class TransenderItem extends Item {
         );
 
         if (entityHit != null) {
-            Entity target = entityHit.getEntity();
-            return target.getPos();
+            return entityHit;
         }
 
-        return end;
+        return BlockHitResult.createMissed(end, user.getFacing().getOpposite(), BlockPos.ofFloored(end));
     }
 
 

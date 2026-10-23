@@ -4,7 +4,7 @@ package net.lixir.pre.common.block.entity;
 import net.lixir.pre.common.ProgressionReEnvisioned;
 import net.lixir.pre.common.block.InductionFurnaceBlock;
 import net.lixir.pre.common.init.PREBlockEntityTypes;
-import net.lixir.pre.common.item.ItemStackUtil;
+import net.lixir.pre.common.util.ItemStackUtil;
 import net.lixir.pre.common.recipe.InductionSmeltingRecipe;
 import net.lixir.pre.common.init.PRERecipeTypes;
 import net.lixir.pre.common.init.tag.PREItemTags;
