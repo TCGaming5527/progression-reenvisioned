@@ -1,5 +1,9 @@
 package net.lixir.pre.common.payload;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.lixir.pre.client.PREClient;
+import net.lixir.pre.client.gui.hud.SpeechHud;
+import net.lixir.pre.client.gui.hud.SpeechHudTypeRegistry;
 import net.lixir.pre.common.ProgressionReEnvisioned;
 import net.lixir.pre.common.block.SpeechHudType;
 import net.minecraft.network.RegistryByteBuf;
@@ -20,6 +24,18 @@ public record BlockSpeechPayload(SpeechHudType speechHudType) implements CustomP
                 Identifier id = Identifier.tryParse(string);
                 return new BlockSpeechPayload(() -> id);
             });
+
+    public static void handle(BlockSpeechPayload payload, ClientPlayNetworking.Context context) {
+        Identifier identifier = payload.speechHudType().getId();
+        SpeechHud speechHud = SpeechHudTypeRegistry.getHud(identifier);
+        if (PREClient.CURRENT_SPEECH != null) {
+            PREClient.CURRENT_SPEECH.reset();
+        }
+
+        if (speechHud != null) {
+            speechHud.activate();
+        }
+    }
 
     @Override
     public @NotNull Id<? extends CustomPayload> getId() {

@@ -2,6 +2,8 @@ package net.lixir.pre.common.item;
 
 import net.lixir.pre.common.entity.player.ItemManagerCooldownUtil;
 import net.lixir.pre.common.init.PRESoundEvents;
+import net.lixir.pre.common.payload.PlayItemUseSoundPayload;
+import net.lixir.pre.common.util.PREUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -9,9 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.s2c.play.StopSoundS2CPacket;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
@@ -39,6 +39,15 @@ public class TransenderItem extends Item {
         } else {
             user.setCurrentHand(hand);
             world.playSound(null, user.getX(), user.getY(), user.getZ(), PRESoundEvents.ITEM_TRANSENDER_TELEPORT_START, SoundCategory.PLAYERS);
+
+            if (world instanceof ServerWorld serverWorld) {
+                PREUtil.forNearby(user.getEyePos(), serverWorld, p ->
+                        PlayItemUseSoundPayload.send(
+                                p, user, this,
+                                PRESoundEvents.ITEM_TRANSENDER_AMBIENT, SoundCategory.PLAYERS
+                        )
+                );
+            }
             return ActionResult.CONSUME;
         }
     }
@@ -51,9 +60,7 @@ public class TransenderItem extends Item {
 
         float width = user.getWidth();
         float height = user.getHeight();
-        if (remainingUseTicks % 240 == 0 || remainingUseTicks == getMaxUseTime(stack, user)) {
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), PRESoundEvents.ITEM_TRANSENDER_AMBIENT, SoundCategory.PLAYERS);
-        }
+
         for (int i = 0; i < random.nextBetween(7, 9); i++) {
             double x = (tpPos.x + ((random.nextFloat() - 0.5f) * width));
             double y = (tpPos.y + (random.nextFloat() * height));
@@ -80,17 +87,9 @@ public class TransenderItem extends Item {
                 }
             }
 
-            StopSoundS2CPacket stopAmbient = new StopSoundS2CPacket(PRESoundEvents.ITEM_ENDER_EYE_TELEPORT_AMBIENT.id(), SoundCategory.MASTER);
-            for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers(serverPlayerEntity -> serverPlayerEntity.distanceTo(user) < 32)) {
-                serverPlayerEntity.networkHandler.sendPacket(stopAmbient);
-            }
-
             world.playSound(null, tpPos.getX(), tpPos.getY(), tpPos.getZ(), PRESoundEvents.ITEM_TRANSENDER_TELEPORT, SoundCategory.PLAYERS);
             if (user instanceof PlayerEntity player && !player.isCreative()) {
                 player.getItemCooldownManager().set(stack, 400);
-                if (player instanceof ServerPlayerEntity serverPlayer) {
-                    serverPlayer.networkHandler.sendPacket(stopAmbient);
-                }
             }
 
             user.swingHand(user.getActiveHand(), true);

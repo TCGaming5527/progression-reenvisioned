@@ -8,6 +8,8 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.lixir.pre.common.payload.EnderEyeSpeechPayload;
 import net.lixir.pre.common.init.PRESoundEvents;
+import net.lixir.pre.common.payload.PlayItemUseSoundPayload;
+import net.lixir.pre.common.util.PREUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnderEyeItem;
@@ -83,6 +85,12 @@ public class EnderEyeItemMixin extends Item {
             } else {
                 serverPlayer.setCurrentHand(hand);
                 instance.playSound(null, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), PRESoundEvents.ITEM_ENDER_EYE_TELEPORT_START, SoundCategory.PLAYERS);
+                PREUtil.forNearby(serverPlayer.getEyePos(), instance, p ->
+                        PlayItemUseSoundPayload.send(
+                                p, serverPlayer, this,
+                                PRESoundEvents.ITEM_TRANSENDER_AMBIENT, SoundCategory.PLAYERS
+                        )
+                );
             }
         }
         return null;
@@ -96,9 +104,6 @@ public class EnderEyeItemMixin extends Item {
 
         float width = user.getWidth();
         float height = user.getHeight();
-        if (remainingUseTicks % 240 == 0 || remainingUseTicks == getMaxUseTime(stack, user)) {
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), PRESoundEvents.ITEM_ENDER_EYE_TELEPORT_AMBIENT, SoundCategory.PLAYERS);
-        }
         for (int i = 0; i < random.nextBetween(7, 9); i++) {
             double x = (tpPos.x + ((random.nextFloat() - 0.5f) * width));
             double y = (tpPos.y + (random.nextFloat() * height));
@@ -127,13 +132,6 @@ public class EnderEyeItemMixin extends Item {
             world.playSound(null, tpPos.getX(), tpPos.getY(), tpPos.getZ(), PRESoundEvents.ITEM_ENDER_EYE_TELEPORT, SoundCategory.PLAYERS);
             if (user instanceof PlayerEntity player) {
                 player.getItemCooldownManager().set(stack, 60);
-            }
-            if (world instanceof ServerWorld serverWorld) {
-                StopSoundS2CPacket stopSoundS2CPacket = new StopSoundS2CPacket(PRESoundEvents.ITEM_ENDER_EYE_TELEPORT_AMBIENT.id(), SoundCategory.PLAYERS);
-
-                for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers(serverPlayerEntity -> serverPlayerEntity.distanceTo(user) < 32)) {
-                    serverPlayerEntity.networkHandler.sendPacket(stopSoundS2CPacket);
-                }
             }
             user.swingHand(user.getActiveHand(), true);
             stack.decrementUnlessCreative(1, user);

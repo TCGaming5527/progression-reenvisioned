@@ -23,10 +23,9 @@ public final class PRENetwork {
     //region Payloads
     private static void registerPayloads() {
         //region Clientbound
+        playS2C().register(PlayItemUseSoundPayload.ID, PlayItemUseSoundPayload.CODEC);
         playS2C().register(AddVelocityPayload.ID, AddVelocityPayload.CODEC);
-        playS2C().register(SetVelocityPayload.ID, SetVelocityPayload.CODEC);
         playS2C().register(ItemPickupNotifierPayload.ID, ItemPickupNotifierPayload.CODEC);
-        playS2C().register(SetPositionPayload.ID, SetPositionPayload.CODEC);
         playS2C().register(EnderEyeSpeechPayload.ID, EnderEyeSpeechPayload.CODEC);
         playS2C().register(BlockSpeechPayload.ID, BlockSpeechPayload.CODEC);
         //endregion

@@ -23,9 +23,7 @@ public class MinecraftClientMixin {
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;wasPressed()Z"))
     private boolean pre$disableInvKey(KeyBinding key, Operation<Boolean> original) {
         if (key == this.options.inventoryKey) {
-            if (EnderEyeSpeechHud.INSTANCE.isActive() || SpeechHudTypeRegistry.anyActive()) {
-                return false;
-            }
+
         }
         return original.call(key);
     }
