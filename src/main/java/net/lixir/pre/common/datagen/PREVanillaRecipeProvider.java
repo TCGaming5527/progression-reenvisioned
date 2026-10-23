@@ -46,9 +46,8 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                             RecipeCategory.BUILDING_BLOCKS,
                             Items.CAMPFIRE
                         )
-                        .pattern(" S ")
-                        .pattern("SSS")
-                        .pattern("LLL")
+                        .pattern("SS")
+                        .pattern("LL")
                         .input('S', Items.STICK)
                         .input('L', ItemTags.LOGS_THAT_BURN)
                         .criterion("has_stick", conditionsFromItem(Items.STICK))
