@@ -3,17 +3,21 @@ package net.lixir.pre.common.item;
 import lombok.val;
 import net.lixir.pre.common.init.PREBlocks;
 import net.lixir.pre.common.init.PREDataComponentTypes;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -37,6 +41,22 @@ public class AlumnabrassBrushItem extends Item {
     }
 
     @Override
+    public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
+        if (this.getCharge(stack) < this.getMaxCharge(stack)) {
+            if (stack.getOrDefault(PREDataComponentTypes.CHARGING_TICKS, 0) < stack.getOrDefault(PREDataComponentTypes.MAX_CHARGING_TICKS, 0)) {
+                stack.set(
+                        PREDataComponentTypes.CHARGING_TICKS,
+                        stack.getOrDefault(PREDataComponentTypes.CHARGING_TICKS, 0) + 1
+                );
+            } else {
+                this.setCharge(stack, this.getCharge(stack) + 1);
+                stack.set(PREDataComponentTypes.CHARGING_TICKS, 0);
+            }
+        }
+        super.inventoryTick(stack, world, entity, slot);
+    }
+
+    @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (world.isClient) {
             val targetPos = getTargetPos(user, world);
@@ -48,7 +68,7 @@ public class AlumnabrassBrushItem extends Item {
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
         val stack = user.getStackInHand(hand);
-        if (!stack.contains(PREDataComponentTypes.CHARGE) || stack.get(PREDataComponentTypes.CHARGE) > 0) {
+        if (this.getCharge(stack) > 0 || user.isCreative()) {
             user.setCurrentHand(hand);
             return ActionResult.CONSUME;
         }
@@ -62,14 +82,38 @@ public class AlumnabrassBrushItem extends Item {
         if (!world.isClient) {
             createPlatform(world, targetPos);
 
-            if (stack.contains(PREDataComponentTypes.CHARGE))
-                stack.set(PREDataComponentTypes.CHARGE,
-                        Math.max(stack.get(PREDataComponentTypes.CHARGE) - 1, 0));
-
+            this.setCharge(stack, this.getCharge(stack) - 1);
             stack.damage(1, user, user.getActiveHand() == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
         }
 
         return super.onStoppedUsing(stack, world, user, remainingUseTicks);
+    }
+
+    public void setCharge(ItemStack stack, int charge) {
+        stack.set(PREDataComponentTypes.CHARGE, Math.clamp(charge, 0, this.getMaxCharge(stack)));
+    }
+
+    public int getCharge(ItemStack stack) {
+        return stack.getOrDefault(PREDataComponentTypes.CHARGE, 0);
+    }
+
+    public int getMaxCharge(ItemStack stack) {
+        return stack.getOrDefault(PREDataComponentTypes.MAX_CHARGE, 4);
+    }
+
+    @Override
+    public int getItemBarStep(ItemStack stack) {
+        return MathHelper.clamp(Math.round(13.0F - (this.getMaxCharge(stack) - this.getCharge(stack)) * 13.0F / this.getMaxCharge(stack)), 0, 13);
+    }
+
+    @Override
+    public int getItemBarColor(ItemStack stack) {
+        return -1;
+    }
+
+    @Override
+    public boolean isItemBarVisible(ItemStack stack) {
+        return true;
     }
 
     private BlockPos getTargetPos(LivingEntity user, World world) {

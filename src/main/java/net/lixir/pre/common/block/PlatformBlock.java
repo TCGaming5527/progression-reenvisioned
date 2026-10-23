@@ -14,6 +14,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,6 +30,11 @@ public class PlatformBlock extends BlockWithEntity {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder.add(BLINKING));
+    }
+
+    @Override
+    protected boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
+        return stateFrom.isOf(this);
     }
 
     @Override

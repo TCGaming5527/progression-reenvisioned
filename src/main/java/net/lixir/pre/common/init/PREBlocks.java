@@ -11,6 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.BlockSoundGroup;
 
 import java.util.function.Function;
 
@@ -25,7 +26,8 @@ public class PREBlocks {
                     .dropsNothing()
                     .emissiveLighting((state, world, pos) -> true)
     );
-    public static final Block RECYCLER = register("recycler", RecyclerBlock::new, AbstractBlock.Settings.create().resistance(1f).hardness(1f));
+    public static final Block RECYCLER = register("recycler", RecyclerBlock::new, AbstractBlock.Settings.create()
+            .sounds(BlockSoundGroup.VAULT).resistance(1f).hardness(1f));
     public static final Block INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlock::new, AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE));
 
     private static RegistryKey<Block> keyOf(String id) {
