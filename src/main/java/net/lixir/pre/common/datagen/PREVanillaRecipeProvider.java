@@ -54,6 +54,108 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         .criterion("has_soul_torch", conditionsFromItem(Items.SOUL_TORCH))
                         .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
                         .offerTo(this.exporter, vanillaRegistryKey("soul_lantern"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.MUD, 8)
+                        .input(Items.DIRT, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_dirt", conditionsFromItem(Items.DIRT))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("mud"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.RED_CONCRETE, 8)
+                        .input(Items.RED_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_red_concrete_powder", conditionsFromItem(Items.RED_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("red_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.ORANGE_CONCRETE, 8)
+                        .input(Items.ORANGE_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_orange_concrete_powder", conditionsFromItem(Items.ORANGE_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("orange_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.YELLOW_CONCRETE, 8)
+                        .input(Items.YELLOW_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_yellow_concrete_powder", conditionsFromItem(Items.YELLOW_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("yellow_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.LIME_CONCRETE, 8)
+                        .input(Items.LIME_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_lime_concrete_powder", conditionsFromItem(Items.LIME_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("lime_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.GREEN_CONCRETE, 8)
+                        .input(Items.GREEN_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_green_concrete_powder", conditionsFromItem(Items.GREEN_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("green_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.CYAN_CONCRETE, 8)
+                        .input(Items.CYAN_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_cyan_concrete_powder", conditionsFromItem(Items.CYAN_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("cyan_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.LIGHT_BLUE_CONCRETE, 8)
+                        .input(Items.LIGHT_BLUE_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_light_blue_concrete_powder", conditionsFromItem(Items.LIGHT_BLUE_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("light_blue_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.BLUE_CONCRETE, 8)
+                        .input(Items.BLUE_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_blue_concrete_powder", conditionsFromItem(Items.BLUE_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("blue_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.PURPLE_CONCRETE, 8)
+                        .input(Items.PURPLE_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_purple_concrete_powder", conditionsFromItem(Items.RED_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("purple_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.MAGENTA_CONCRETE, 8)
+                        .input(Items.MAGENTA_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_magenta_concrete_powder", conditionsFromItem(Items.MAGENTA_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("magenta_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.PINK_CONCRETE, 8)
+                        .input(Items.PINK_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_pink_concrete_powder", conditionsFromItem(Items.PINK_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("pink_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.WHITE_CONCRETE, 8)
+                        .input(Items.WHITE_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_white_concrete_powder", conditionsFromItem(Items.WHITE_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("white_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.LIGHT_GRAY_CONCRETE, 8)
+                        .input(Items.LIGHT_GRAY_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_light_gray_concrete_powder", conditionsFromItem(Items.LIGHT_GRAY_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("light_gray_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.GRAY_CONCRETE, 8)
+                        .input(Items.GRAY_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_gray_concrete_powder", conditionsFromItem(Items.GRAY_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("gray_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.BLACK_CONCRETE, 8)
+                        .input(Items.BLACK_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_black_concrete_powder", conditionsFromItem(Items.BLACK_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("black_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.BROWN_CONCRETE, 8)
+                        .input(Items.RED_CONCRETE_POWDER, 8)
+                        .input(Items.WATER_BUCKET, 1)
+                        .criterion("has_brown_concrete_powder", conditionsFromItem(Items.BROWN_CONCRETE_POWDER))
+                        .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
+                        .offerTo(this.exporter, vanillaRegistryKey("brown_concrete"));
                 createShaped(
                             RecipeCategory.BUILDING_BLOCKS,
                             Items.CAMPFIRE
@@ -76,7 +178,7 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         .pattern("LL")
                         .input('S', ItemTags.SOUL_FIRE_BASE_BLOCKS)
                         .input('L', ItemTags.LOGS_THAT_BURN)
-                        .criterion("has_stick", conditionsFromItem(ItemTags.SOUL_FIRE_BASE_BLOCKS))
+                        .criterion("has_soul_fire", conditionsFromTag(ItemTags.SOUL_FIRE_BASE_BLOCKS))
                         .criterion("has_log", conditionsFromTag(ItemTags.LOGS_THAT_BURN))
                         .offerTo(
                                 this.exporter,
