@@ -84,7 +84,8 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         );
                 createShaped(
                         RecipeCategory.BUILDING_BLOCKS,
-                        Items.CHAIN
+                        Items.CHAIN,
+                        4
                 )
                         .pattern("S")
                         .pattern("S")
