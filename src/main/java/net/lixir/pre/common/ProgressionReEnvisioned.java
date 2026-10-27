@@ -30,6 +30,7 @@ public class ProgressionReEnvisioned implements ModInitializer {
         PREScreenHandlerTypes.initialize();
         PREEntityAttributes.initialize();
         PREDataComponentTypes.initialize();
+        PREAttachmentTypes.initialize();
 
     }
 

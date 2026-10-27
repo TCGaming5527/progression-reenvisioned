@@ -13,7 +13,7 @@ public final class ItemTransformations {
     public static void applySpearTransformation(MatrixStack matrices, AbstractClientPlayerEntity player, Arm arm,
                                                 ItemStack stack, float tickDelta, float equipProgress, float swingProgress) {
         int side = arm == Arm.RIGHT ? 1 : -1;
-        matrices.translate(-0.9f, 1.25f, -0.2f);
+        matrices.translate(-0.6f, 1f, 0f);
         matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(side * 75));
     }
 }

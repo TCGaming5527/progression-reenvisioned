@@ -19,9 +19,13 @@ import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 import static net.minecraft.client.data.BlockStateModelGenerator.*;
 
 public class PREModelProvider extends FabricModelProvider {
+	public static final Model SPEAR_IN_HAND = new Model(Optional.of(ProgressionReEnvisioned.id("item/spear_in_hand")), Optional.empty(), TextureKey.LAYER0);
+
 	public PREModelProvider(FabricDataOutput output) {
 		super(output);
 	}
@@ -123,6 +127,7 @@ public class PREModelProvider extends FabricModelProvider {
 	@Override
 	public void generateItemModels(ItemModelGenerator itemModelGenerator) {
 		itemModelGenerator.register(PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE, Models.GENERATED);
+
 		//region Copper
 		itemModelGenerator.register(PREItems.COPPER_SWORD, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.COPPER_PICKAXE, Models.HANDHELD);
@@ -146,6 +151,8 @@ public class PREModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(PREItems.ELECTRUM_CHESTPLATE, Models.GENERATED);
 		itemModelGenerator.register(PREItems.ELECTRUM_LEGGINGS, Models.GENERATED);
 		itemModelGenerator.register(PREItems.ELECTRUM_BOOTS, Models.GENERATED);
+
+		registerSpear(itemModelGenerator, PREItems.ELECTRUM_SPEAR);
 		//endregion
 		//region Brass
 		itemModelGenerator.register(PREItems.BRASS_INGOT, Models.GENERATED);
@@ -180,23 +187,41 @@ public class PREModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(PREItems.ALUMNABRASS_AXE, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.ALUMNABRASS_SHOVEL, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.ALUMNABRASS_HOE, Models.HANDHELD);
+
 		itemModelGenerator.register(PREItems.ALUMNABRASS_HELMET, Models.GENERATED);
 		itemModelGenerator.register(PREItems.ALUMNABRASS_CHESTPLATE, Models.GENERATED);
 		itemModelGenerator.register(PREItems.ALUMNABRASS_LEGGINGS, Models.GENERATED);
 		itemModelGenerator.register(PREItems.ALUMNABRASS_BOOTS, Models.GENERATED);
+
+		registerSpear(itemModelGenerator, PREItems.ALUMNABRASS_SPEAR);
 		//endregion
 		//region Vocalite
-		itemModelGenerator.register(PREItems.VOCALITE_HELMET, Models.GENERATED);
-		itemModelGenerator.register(PREItems.VOCALITE_CHESTPLATE, Models.GENERATED);
-		itemModelGenerator.register(PREItems.VOCALITE_LEGGINGS, Models.GENERATED);
-		itemModelGenerator.register(PREItems.VOCALITE_BOOTS, Models.GENERATED);
+		itemModelGenerator.register(PREItems.VOCALITE_INGOT, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.VOCALITE_SWORD, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.VOCALITE_PICKAXE, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.VOCALITE_AXE, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.VOCALITE_SHOVEL, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.VOCALITE_HOE, Models.HANDHELD);
-		itemModelGenerator.register(PREItems.VOCALITE_INGOT, Models.HANDHELD);
+
+		itemModelGenerator.register(PREItems.VOCALITE_HELMET, Models.GENERATED);
+		itemModelGenerator.register(PREItems.VOCALITE_CHESTPLATE, Models.GENERATED);
+		itemModelGenerator.register(PREItems.VOCALITE_LEGGINGS, Models.GENERATED);
+		itemModelGenerator.register(PREItems.VOCALITE_BOOTS, Models.GENERATED);
+
+		registerSpear(itemModelGenerator, PREItems.VOCALITE_SPEAR);
 		//endregion
+
+		registerSpear(itemModelGenerator, PREItems.NETHERITE_SPEAR);
+	}
+
+	public static void registerSpear(ItemModelGenerator gen, Item item) {
+		Identifier base = ModelIds.getItemModelId(item);
+		Identifier inHand = base.withSuffixedPath("_in_hand");
+
+		gen.output.accept(item, ItemModelGenerator.createModelWithInHandVariant(
+				ItemModels.basic(Models.GENERATED.upload(base, TextureMap.layer0(base), gen.modelCollector)),
+				ItemModels.basic(SPEAR_IN_HAND.upload(inHand, TextureMap.layer0(inHand), gen.modelCollector))
+		));
 	}
 
 	public static void registerWithVanillaNamespace(ItemModelGenerator gen, Item item, Model model) {

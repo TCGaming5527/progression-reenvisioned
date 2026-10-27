@@ -10,12 +10,9 @@ import org.jetbrains.annotations.NotNull;
 public enum HandTransformations implements HandTransformation {
     EMPTY(ProgressionReEnvisioned.id("empty"), (Arm arm, ModelPart armModel, BipedEntityRenderState state) -> false),
     SPEAR(ProgressionReEnvisioned.id("spear"), (Arm arm, ModelPart armModel, BipedEntityRenderState state) -> {
-        if (state.isUsingItem) {
-            if (arm == Arm.RIGHT) {
-                armModel.yaw = -0.2f;
-                armModel.roll = 0.4f;
-                armModel.pitch = -0.2f;
-            }
+        if (arm == Arm.RIGHT) {
+            armModel.yaw = (float) Math.toRadians(state.relativeHeadYaw);
+            armModel.pitch = (float) Math.toRadians(Math.clamp(state.pitch - 21, -45, 27));
         }
         return true;
     });
