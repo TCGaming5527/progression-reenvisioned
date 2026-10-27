@@ -195,6 +195,7 @@ public class PREModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(PREItems.VOCALITE_AXE, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.VOCALITE_SHOVEL, Models.HANDHELD);
 		itemModelGenerator.register(PREItems.VOCALITE_HOE, Models.HANDHELD);
+		itemModelGenerator.register(PREItems.VOCALITE_INGOT, Models.HANDHELD);
 		//endregion
 	}
 

@@ -12,6 +12,7 @@ import net.lixir.pre.common.util.RecipeUtil;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.recipe.SmithingTransformRecipeJsonBuilder;
+import net.minecraft.data.tag.ItemTagProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.CampfireCookingRecipe;
@@ -23,6 +24,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
@@ -272,6 +274,28 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                         RecipeCategory.TOOLS,
                         Items.MACE
                 );
+                offerInductionSmeltingRecipe(
+                        Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE,
+                        Items.TRIDENT,
+                        PREConventionalItemTags.ALUMNABRASS_INGOTS,
+                        RecipeCategory.TOOLS,
+                        PREItems.ALUMNABRASS_SPEAR
+                );
+                offerInductionSmeltingRecipe(
+                        Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE,
+                        Items.TRIDENT,
+                        PREConventionalItemTags.VOCALITE_INGOTS,
+                        RecipeCategory.TOOLS,
+                        PREItems.VOCALITE_SPEAR
+                );
+                offerInductionSmeltingRecipe(
+                        Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE,
+                        Items.TRIDENT,
+                        ConventionalItemTags.NETHERITE_INGOTS,
+                        RecipeCategory.TOOLS,
+                        PREItems.NETHERITE_SPEAR
+                );
+
                 //region Netherite Induction Smelting
                 offerInductionSmeltingRecipe(
                         Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE,
@@ -665,68 +689,91 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                 //region Brass Smithing
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_HELMET,
+                        Items.IRON_HELMET,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_HELMET,
                         RecipeCategory.TOOLS
                 );
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_CHESTPLATE,
+                        Items.IRON_CHESTPLATE,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_CHESTPLATE,
                         RecipeCategory.TOOLS
                 );
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_LEGGINGS,
+                        Items.IRON_LEGGINGS,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_LEGGINGS,
                         RecipeCategory.TOOLS
                 );
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_BOOTS,
+                        Items.IRON_BOOTS,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_BOOTS,
                         RecipeCategory.TOOLS
                 );
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_SWORD,
+                        Items.IRON_SWORD,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_SWORD,
                         RecipeCategory.TOOLS
                 );
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_PICKAXE,
+                        Items.IRON_PICKAXE,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_PICKAXE,
                         RecipeCategory.TOOLS
                 );
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_SHOVEL,
+                        Items.IRON_SHOVEL,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_SHOVEL,
                         RecipeCategory.TOOLS
                 );
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_AXE,
+                        Items.IRON_AXE,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_AXE,
                         RecipeCategory.TOOLS
                 );
                 offerSmithingTransformRecipe(
                         PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
-                        PREItems.COPPER_HOE,
+                        Items.IRON_HOE,
                         PREConventionalItemTags.BRASS_INGOTS,
                         PREItems.BRASS_HOE,
                         RecipeCategory.TOOLS
                 );
                 //endregion
+                //region Misc Smithing
+                offerSmithingTransformRecipe(
+                        PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
+                        PREItems.COPPER_HELMET,
+                        Items.TURTLE_SCUTE,
+                        Items.TURTLE_HELMET,
+                        RecipeCategory.TOOLS
+                );
+                offerSmithingTransformRecipe(
+                        PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE,
+                        Items.COMPASS,
+                        Items.ECHO_SHARD,
+                        Items.RECOVERY_COMPASS,
+                        RecipeCategory.TOOLS
+                );
+                offerSmithingTransformRecipe(
+                        Items.RESIN_BRICK,
+                        Items.IRON_INGOT,
+                        ConventionalItemTags.RESIN_BRICKS,
+                        PREItems.BRASS_INGOT,
+                        RecipeCategory.MISC
+                );
+
                 //region Copper Crafting
                 createHelmetRecipe(RecipeCategory.TOOLS, ConventionalItemTags.COPPER_INGOTS, PREItems.COPPER_HELMET);
                 createChestplateRecipe(RecipeCategory.TOOLS, ConventionalItemTags.COPPER_INGOTS, PREItems.COPPER_CHESTPLATE);
@@ -748,33 +795,48 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                         Items.COBBLESTONE,
                         Items.STONE
                 );
+                offerCampfireRecipe(
+                        1200,
+                        Items.ROTTEN_FLESH,
+                        Items.LEATHER
+                );
+                offerCampfireRecipe(
+                        1200,
+                        Items.OAK_LOG,
+                        Items.CHARCOAL
+                );
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.FLINT, 4)
+                        .input(Items.GRAVEL, 2)
+                        .criterion("has_gravel", conditionsFromItem(Items.GRAVEL))
+                        .offerTo(this.exporter, modRegistryKey("flint"));
 
                 createShapeless(RecipeCategory.MISC, PREItems.ROSE_GOLD_INGOT)
-                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, ConventionalItemTags.REDSTONE_DUSTS)), 4)
+                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, ConventionalItemTags.COPPER_INGOTS)), 4)
                         .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, ConventionalItemTags.GOLD_INGOTS)), 4)
-                        .criterion("has_redstone", conditionsFromItem(Items.REDSTONE))
+                        .criterion("has_copper", conditionsFromItem(Items.COPPER_INGOT))
                         .criterion("has_gold", conditionsFromItem(Items.GOLD_INGOT))
                         .offerTo(this.exporter, modRegistryKey("rose_gold_ingot"));
-                createShapeless(RecipeCategory.MISC, PREItems.BRASS_INGOT)
-                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, ConventionalItemTags.COPPER_INGOTS)), 4)
-                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, ConventionalItemTags.IRON_INGOTS)), 4)
-                        .criterion("has_copper", conditionsFromItem(Items.COPPER_INGOT))
-                        .criterion("has_iron", conditionsFromItem(Items.IRON_INGOT))
-                        .offerTo(this.exporter, modRegistryKey("brass_ingot"));
+
                 createShapeless(RecipeCategory.MISC, PREItems.ALUMNABRASS_INGOT)
-                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, PREConventionalItemTags.BRASS_INGOTS)), 2)
-                        .input(Items.NETHERITE_SCRAP, 2)
+                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, PREConventionalItemTags.BRASS_INGOTS)), 4)
+                        .input(Items.NETHERITE_SCRAP, 4)
                         .criterion("has_brass", conditionsFromItem(PREItems.BRASS_INGOT))
                         .criterion("has_scrap", conditionsFromItem(Items.NETHERITE_SCRAP))
                         .offerTo(this.exporter, modRegistryKey("alumnabrass_ingot"));
 
-
                 createShapeless(RecipeCategory.MISC, PREItems.ELECTRUM_INGOT)
-                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, PREConventionalItemTags.ROSE_GOLD_INGOTS)), 2)
-                        .input(Items.NETHERITE_SCRAP, 2)
+                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, PREConventionalItemTags.ROSE_GOLD_INGOTS)), 4)
+                        .input(Items.NETHERITE_SCRAP, 4)
                         .criterion("has_rose_gold", conditionsFromItem(PREItems.ROSE_GOLD_INGOT))
                         .criterion("has_scrap", conditionsFromItem(Items.NETHERITE_SCRAP))
                         .offerTo(this.exporter, modRegistryKey("electrum_ingot"));
+
+                createShapeless(RecipeCategory.MISC, PREItems.VOCALITE_INGOT)
+                        .input(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, ConventionalItemTags.DIAMOND_GEMS)), 4)
+                        .input(Items.NETHERITE_SCRAP, 4)
+                        .criterion("has_diamond", conditionsFromItem(Items.DIAMOND))
+                        .criterion("has_scrap", conditionsFromItem(Items.NETHERITE_SCRAP))
+                        .offerTo(this.exporter, modRegistryKey("vocalite_ingot"));
 
                 createShaped(
                         RecipeCategory.BUILDING_BLOCKS,
@@ -820,11 +882,11 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                         .pattern("ILI")
                         .input('I', Items.IRON_BLOCK)
                         .input('B', Items.BLAST_FURNACE)
-                        .input('N', Items.NETHERITE_INGOT)
+                        .input('N', Items.NETHERITE_SCRAP)
                         .input('L', Items.LAVA_BUCKET)
                         .input('T', Items.IRON_TRAPDOOR)
                         .criterion("has_iron", conditionsFromItem(Items.IRON_INGOT))
-                        .criterion("has_netherite_ingot", conditionsFromItem(Items.NETHERITE_INGOT))
+                        .criterion("has_netherite_scrap", conditionsFromItem(Items.NETHERITE_SCRAP))
                         .offerTo(
                                 this.exporter,
                                 modRegistryKey("induction_furnace")

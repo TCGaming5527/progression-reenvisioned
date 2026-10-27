@@ -2,6 +2,7 @@ package net.lixir.pre.common.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.Items;
@@ -156,6 +157,16 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         .criterion("has_brown_concrete_powder", conditionsFromItem(Items.BROWN_CONCRETE_POWDER))
                         .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
                         .offerTo(this.exporter, vanillaRegistryKey("brown_concrete"));
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.FLINT, 8)
+                        .input(Items.COBBLESTONE, 2)
+                        .criterion("has_cobblestone", conditionsFromItem(Items.COBBLESTONE))
+                        .offerTo(this.exporter, vanillaRegistryKey("flint"));
+                createShapeless(RecipeCategory.TOOLS, Items.FLINT_AND_STEEL)
+                        .input(Items.COBBLESTONE, 1)
+                        .input(Items.FLINT, 1)
+                        .criterion("has_cobblestones", conditionsFromItem(Items.COBBLESTONE))
+                        .criterion("has_flint", conditionsFromItem(Items.FLINT))
+                        .offerTo(this.exporter, vanillaRegistryKey("flint_and_steel"));
                 createShaped(
                             RecipeCategory.BUILDING_BLOCKS,
                             Items.CAMPFIRE
@@ -196,6 +207,117 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         .offerTo(
                                 this.exporter,
                                 vanillaRegistryKey("chain")
+                        );
+                createShaped(
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Items.FURNACE
+                )
+                        .pattern("SSS")
+                        .pattern("PCP")
+                        .pattern("PPP")
+                        .input('S', Items.STONE)
+                        .input('C', ItemTags.COALS)
+                        .input('P', Items.SMOOTH_STONE)
+                        .criterion("has_stone", conditionsFromItem(Items.STONE))
+                        .criterion("has_coals", conditionsFromTag(ItemTags.COALS))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("furnace")
+                        );
+                createShaped(
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Items.BLAST_FURNACE
+                )
+                        .pattern("SSS")
+                        .pattern("PCP")
+                        .pattern("PPP")
+                        .input('S', Items.POLISHED_DEEPSLATE)
+                        .input('C', ItemTags.COALS)
+                        .input('P', Items.SMOOTH_STONE)
+                        .criterion("has_polished_deepslate", conditionsFromItem(Items.POLISHED_DEEPSLATE))
+                        .criterion("has_coals", conditionsFromTag(ItemTags.COALS))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("blast_furnace")
+                        );
+                createShaped(
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Items.SMOKER
+                )
+                        .pattern("PSP")
+                        .pattern("SCS")
+                        .pattern("PSP")
+                        .input('S', Items.STONE)
+                        .input('C', ItemTags.COALS)
+                        .input('P', ItemTags.LOGS)
+                        .criterion("has_stone", conditionsFromItem(Items.STONE))
+                        .criterion("has_coals", conditionsFromTag(ItemTags.COALS))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("smoker")
+                        );
+                createShaped(
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Items.FURNACE
+                )
+                        .pattern("CSC")
+                        .pattern("P P")
+                        .input('S', Items.STONE)
+                        .input('C', ItemTags.PLANKS)
+                        .input('P', ItemTags.LOGS)
+                        .criterion("has_stone", conditionsFromItem(Items.STONE))
+                        .criterion("has_planks", conditionsFromTag(ItemTags.PLANKS))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("grindstone")
+                        );
+                createShaped(
+                        RecipeCategory.COMBAT,
+                        Items.LEATHER_HELMET
+                )
+                        .pattern(" P ")
+                        .pattern("P P")
+                        .input('P', Items.LEATHER)
+                        .criterion("has_leather", conditionsFromItem(Items.LEATHER))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("leather_helmet")
+                        );
+                createShaped(
+                        RecipeCategory.COMBAT,
+                        Items.LEATHER_CHESTPLATE
+                )
+                        .pattern("P P")
+                        .pattern("PPP")
+                        .pattern(" P ")
+                        .input('P', Items.LEATHER)
+                        .criterion("has_leather", conditionsFromItem(Items.LEATHER))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("leather_chestplate")
+                        );
+                createShaped(
+                        RecipeCategory.COMBAT,
+                        Items.LEATHER_LEGGINGS
+                )
+                        .pattern("PPP")
+                        .pattern("P P")
+                        .input('P', Items.LEATHER)
+                        .criterion("has_leather", conditionsFromItem(Items.LEATHER))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("leather_leggings")
+                        );
+                createShaped(
+                        RecipeCategory.COMBAT,
+                        Items.LEATHER_BOOTS
+                )
+                        .pattern("P P")
+                        .input('P', Items.LEATHER)
+                        .criterion("has_leather", conditionsFromItem(Items.LEATHER))
+                        .offerTo(
+                                this.exporter,
+                                vanillaRegistryKey("leather_boots")
                         );
             }
         };
