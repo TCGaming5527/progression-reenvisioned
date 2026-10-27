@@ -96,7 +96,7 @@ public class TransenderItem extends Item {
 
             world.playSound(null, tpPos.getX(), tpPos.getY(), tpPos.getZ(), PRESoundEvents.ITEM_TRANSENDER_TELEPORT, SoundCategory.PLAYERS);
             if (user instanceof PlayerEntity player && !player.isCreative()) {
-                player.getItemCooldownManager().set(stack, hitEntity ? 200 : 400);
+                player.getItemCooldownManager().set(stack, hitEntity ? 50 : 400);
             }
 
             user.swingHand(user.getActiveHand(), true);

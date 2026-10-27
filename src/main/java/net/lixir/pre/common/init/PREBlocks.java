@@ -26,11 +26,12 @@ public interface PREBlocks {
                     .dropsNothing()
                     .suffocates((a, b, c) -> false)
                     .emissiveLighting((state, world, pos) -> true)
+                    .sounds(BlockSoundGroup.HONEY)
     );
     Block RECYCLER = register("recycler", RecyclerBlock::new, AbstractBlock.Settings.create()
             .sounds(BlockSoundGroup.VAULT).resistance(1f).hardness(1f));
-    Block INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlock::new,
-            AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE));
+    Block INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlock::new, AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE)
+            .sounds(BlockSoundGroup.NETHERITE).resistance(1f).hardness(1f));
 
     static RegistryKey<Block> keyOf(String id) {
         return RegistryKey.of(RegistryKeys.BLOCK, ProgressionReEnvisioned.id(id));

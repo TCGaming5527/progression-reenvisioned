@@ -121,7 +121,7 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                     RecipeCategory category,
                     Item output
             ) {
-                offerInductionSmeltingRecipe(upgradeTemplate, base, Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, addition)), 2, 300, category, output);
+                offerInductionSmeltingRecipe(upgradeTemplate, base, Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, addition)), 1, 300, category, output);
             }
 
             private void offerInductionSmeltingRecipe(
@@ -131,7 +131,7 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                     RecipeCategory category,
                     Item output
             ) {
-                offerInductionSmeltingRecipe(upgradeTemplate, base, Ingredient.ofItem(addition), 2, 300, category, output);
+                offerInductionSmeltingRecipe(upgradeTemplate, base, Ingredient.ofItem(addition), 1, 300, category, output);
             }
             private void offerInductionSmeltingRecipe(
                     Item upgradeTemplate,
@@ -796,12 +796,12 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                         Items.STONE
                 );
                 offerCampfireRecipe(
-                        1200,
+                        600,
                         Items.ROTTEN_FLESH,
                         Items.LEATHER
                 );
                 offerCampfireRecipe(
-                        1200,
+                        600,
                         Items.OAK_LOG,
                         Items.CHARCOAL
                 );
