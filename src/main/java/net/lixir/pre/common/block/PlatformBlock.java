@@ -34,7 +34,7 @@ public class PlatformBlock extends BlockWithEntity {
 
     @Override
     protected boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-        return stateFrom.isOf(this);
+        return stateFrom.isOf(this) && state.get(BLINKING) == stateFrom.get(BLINKING);
     }
 
     @Override

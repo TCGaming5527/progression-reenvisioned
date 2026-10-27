@@ -8,6 +8,8 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.LodestoneTrackerComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -15,9 +17,13 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
+import net.minecraft.util.math.Position;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -32,14 +38,26 @@ public class CompassHud {
 
     public void onHudRender(DrawContext context, RenderTickCounter tickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
-        ClientPlayerEntity player = client.player;
         TextRenderer textRenderer = client.textRenderer;
+
+        ClientPlayerEntity player = client.player;
         if (player == null) return;
-        ArrayList<Tools> activeTools = new ArrayList<>();
+
+        Map<Tools, ItemStack> activeTools = new HashMap<>();
+        ItemStack mainHandStack = player.getMainHandStack();
+
         for (Tools tool : Tools.values()) {
-            if (player.getInventory().contains(tool.predicate)) {
-                activeTools.add(tool);
+            if (tool.predicate.test(mainHandStack)) {
+                activeTools.put(tool, mainHandStack);
+                continue;
             }
+            player.getInventory().contains(stack -> {
+                if (tool.predicate.test(stack)) {
+                    activeTools.put(tool, stack);
+                    return true;
+                }
+                return false;
+            });
         }
 
         final int x = 8;
@@ -49,8 +67,9 @@ public class CompassHud {
         MatrixStack matrices = context.getMatrices();
 
         int i = 0;
-        for (Tools tool : activeTools) {
-            Text text = tool.getText(client, player);
+        for (Tools tool : activeTools.keySet()) {
+            ItemStack toolStack = activeTools.get(tool);
+            Text text = tool.getText(client, player, toolStack);
 
             matrices.push();
             matrices.scale(1.5f, 1.5f, 1f);
@@ -77,7 +96,7 @@ public class CompassHud {
 
     }
 
-    public Text getDeathCoords(MinecraftClient client, @NotNull PlayerEntity player) {
+    public static Text getDeathCoords(MinecraftClient client, PlayerEntity player, ItemStack stack) {
         Optional<GlobalPos> deathPosOpt = player.getLastDeathPos();
         if (deathPosOpt.isPresent()) {
             GlobalPos deathPos = deathPosOpt.get();
@@ -88,13 +107,24 @@ public class CompassHud {
         }
         return Text.literal("???");
     }
-    public Text getCompassCoords(MinecraftClient client, @NotNull PlayerEntity player) {
-        return Text.literal((int) Math.floor(player.getX()) + ", " + (int) Math.floor(player.getY()) + ", " + (int) Math.floor(player.getZ()));
+    public static Text getCompassCoords(MinecraftClient client, PlayerEntity player, ItemStack stack) {
+        Position coords = player.getPos();
+        LodestoneTrackerComponent lodestone = stack.get(DataComponentTypes.LODESTONE_TRACKER);
+
+        if (lodestone != null) {
+            GlobalPos lodestonePos = lodestone.target().orElse(null);
+            if (lodestonePos != null && player.getWorld().getRegistryKey() == lodestonePos.dimension()) {
+                coords = new Vec3d(lodestonePos.pos().getX(), lodestonePos.pos().getY(), lodestonePos.pos().getZ());
+            } else {
+                return Text.literal("???");
+            }
+        }
+        return Text.literal((int) coords.getX() + " " + (int) coords.getY() + " " + (int) coords.getZ());
     }
 
     enum Tools {
-        COMPASS(stack -> stack.isOf(Items.COMPASS), COMPASS_TEXTURE, CompassHud.INSTANCE::getCompassCoords),
-        RECOVERY_COMPASS(stack -> stack.isOf(Items.RECOVERY_COMPASS), RECOVERY_COMPASS_TEXTURE, CompassHud.INSTANCE::getDeathCoords);
+        COMPASS(stack -> stack.isOf(Items.COMPASS), COMPASS_TEXTURE, CompassHud::getCompassCoords),
+        RECOVERY_COMPASS(stack -> stack.isOf(Items.RECOVERY_COMPASS), RECOVERY_COMPASS_TEXTURE, CompassHud::getDeathCoords);
 
         private final Predicate<ItemStack> predicate;
         private final Identifier texture;
@@ -108,11 +138,11 @@ public class CompassHud {
 
         @FunctionalInterface
         interface ToolText {
-            Text getText(MinecraftClient client, PlayerEntity player);
+            Text getText(MinecraftClient client, PlayerEntity player, ItemStack stack);
         }
 
-        public Text getText(MinecraftClient client, PlayerEntity player) {
-            return toolText.getText(client, player);
+        public Text getText(MinecraftClient client, PlayerEntity player, ItemStack stack) {
+            return toolText.getText(client, player, stack);
         }
     }
 }

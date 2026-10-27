@@ -16,6 +16,8 @@ public class PRERecyclableItemProvider extends RecyclableItemProvider {
 
     @Override
     protected void addRecyclableItems() {
+
+        // Common Recycle
         add(Items.ROTTEN_FLESH, PRELootTables.COMMON_RECYCLE);
         add(Items.SPIDER_EYE, PRELootTables.COMMON_RECYCLE);
         add(Items.STRING, PRELootTables.COMMON_RECYCLE);
@@ -44,6 +46,7 @@ public class PRERecyclableItemProvider extends RecyclableItemProvider {
         add(Items.BRICKS, PRELootTables.COMMON_RECYCLE);
         add(Items.DISC_FRAGMENT_5, PRELootTables.COMMON_RECYCLE);
 
+        // Rare Recycle
         add(Items.CREEPER_HEAD, PRELootTables.RARE_RECYCLE);
         add(Items.ZOMBIE_HEAD, PRELootTables.RARE_RECYCLE);
         add(Items.PIGLIN_HEAD, PRELootTables.RARE_RECYCLE);
@@ -100,5 +103,15 @@ public class PRERecyclableItemProvider extends RecyclableItemProvider {
         add(Items.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE, PRELootTables.RARE_RECYCLE);
         add(PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE, PRELootTables.RARE_RECYCLE);
         add(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, PRELootTables.RARE_RECYCLE);
+
+        // Relic Recycle
+        add(Items.RECOVERY_COMPASS, PRELootTables.RELIC_RECYCLE);
+        add(Items.MACE, PRELootTables.RELIC_RECYCLE);
+        add(PREItems.TRANSENDER, PRELootTables.RELIC_RECYCLE);
+        add(PREItems.OLD_CLOCK, PRELootTables.RELIC_RECYCLE);
+        add(PREItems.NETHERITE_SPEAR, PRELootTables.RELIC_RECYCLE);
+        add(PREItems.ELECTRUM_SPEAR, PRELootTables.RELIC_RECYCLE);
+        add(PREItems.ALUMNABRASS_SPEAR, PRELootTables.RELIC_RECYCLE);
+        add(PREItems.VOCALITE_SPEAR, PRELootTables.RELIC_RECYCLE);
     }
 }

@@ -8,14 +8,14 @@ import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 
-public class PREScreenHandlerTypes {
-    public static final ScreenHandlerType<InductionFurnaceScreenHandler> INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceScreenHandler::new);
+public interface PREScreenHandlerTypes {
+    ScreenHandlerType<InductionFurnaceScreenHandler> INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceScreenHandler::new);
 
     private static <T extends ScreenHandler> ScreenHandlerType<T> register(String id, ScreenHandlerType.Factory<T> factory) {
         return Registry.register(Registries.SCREEN_HANDLER, ProgressionReEnvisioned.id(id), new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));
     }
 
-    public static void initialize() {
+    static void initialize() {
 
     }
 }

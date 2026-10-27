@@ -4,7 +4,7 @@ package net.lixir.pre.client.render.armor;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.lixir.pre.common.init.PREItems;
 import net.lixir.pre.common.item.equipment.ArmorModelType;
-import net.lixir.pre.common.item.equipment.ArmorModelTypes;
+import net.lixir.pre.common.init.PREArmorModelTypes;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.item.ItemConvertible;
@@ -59,7 +59,7 @@ public final class ArmorModelRegistry {
 
     public static void initialize() {
         register(
-                ArmorModelTypes.VOCALITE,
+                PREArmorModelTypes.VOCALITE,
                 VocaliteArmorModel::new,
                 VocaliteArmorModel.LAYER_LOCATION,
                 PREItems.VOCALITE_HELMET,
@@ -68,7 +68,7 @@ public final class ArmorModelRegistry {
                 PREItems.VOCALITE_BOOTS
         );
         register(
-                ArmorModelTypes.ELECTRUM,
+                PREArmorModelTypes.ELECTRUM,
                 ElectrumArmorModel::new,
                 ElectrumArmorModel.LAYER_LOCATION,
                 PREItems.ELECTRUM_HELMET,

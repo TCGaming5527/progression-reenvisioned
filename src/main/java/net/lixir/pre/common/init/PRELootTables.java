@@ -38,6 +38,7 @@ public interface PRELootTables {
     RegistryKey<LootTable> RARE_RECYCLE_LOOT = of("recycling/rare_loot");
     RegistryKey<LootTable> RARE_RECYCLE = of("recycling/rare");
     RegistryKey<LootTable> EPIC_RECYCLE = of("recycling/epic");
+    RegistryKey<LootTable> RELIC_RECYCLE = of("recycling/relic");
     RegistryKey<LootTable> BRASS_EQUIPMENT = of("recycling/brass_equipment");
     RegistryKey<LootTable> DIAMOND_EQUIPMENT = of("recycling/diamond_equipment");
     RegistryKey<LootTable> ROSE_GOLD_EQUIPMENT = of("recycling/rose_gold_equipment");

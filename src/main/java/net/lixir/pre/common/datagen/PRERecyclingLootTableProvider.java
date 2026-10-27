@@ -16,10 +16,7 @@ import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.AlternativeEntry;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LootTableEntry;
-import net.minecraft.loot.function.EnchantRandomlyLootFunction;
-import net.minecraft.loot.function.EnchantWithLevelsLootFunction;
-import net.minecraft.loot.function.SetComponentsLootFunction;
-import net.minecraft.loot.function.SetStewEffectLootFunction;
+import net.minecraft.loot.function.*;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.registry.RegistryKey;
@@ -326,6 +323,25 @@ public class PRERecyclingLootTableProvider extends SimpleFabricLootTableProvider
                                                 LootTableEntry.builder(PRELootTables.RARE_RECYCLE_LOOT)
                                         )
                                 )
+                )
+        );
+        lootTableBiConsumer.accept(
+                PRELootTables.RELIC_RECYCLE,
+                LootTable.builder().pool(
+                        LootPool.builder()
+                                .rolls(ConstantLootNumberProvider.create(1))
+                                .with(ItemEntry.builder(PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE))
+                                .with(ItemEntry.builder(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE))
+                                .with(randomlyEnchanted(Items.ENCHANTED_BOOK))
+                                .with(ItemEntry.builder(Items.NETHERITE_SCRAP).apply(
+                                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2))
+                                ))
+                                .with(ItemEntry.builder(Items.ECHO_SHARD).apply(
+                                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))
+                                ))
+                                .with(ItemEntry.builder(Items.DIAMOND).apply(
+                                        SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))
+                                ))
                 )
         );
 

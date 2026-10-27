@@ -9,10 +9,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
-public class PRELootContextTypes {
-    public static final ContextType RECYCLING = register("recycling", (builder) -> builder.require(LootContextParameters.ORIGIN).require(LootContextParameters.THIS_ENTITY));
+public interface PRELootContextTypes {
+    ContextType RECYCLING = register("recycling", (builder) -> builder.require(LootContextParameters.ORIGIN).require(LootContextParameters.THIS_ENTITY));
 
-    private static ContextType register(String name, @NotNull Consumer<ContextType.Builder> type) {
+    static ContextType register(String name, @NotNull Consumer<ContextType.Builder> type) {
         ContextType.Builder builder = new ContextType.Builder();
         type.accept(builder);
         ContextType contextType = builder.build();
@@ -25,7 +25,7 @@ public class PRELootContextTypes {
         }
     }
 
-    public static void initialize() {
+    static void initialize() {
 
     }
 }

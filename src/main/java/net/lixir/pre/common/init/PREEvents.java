@@ -5,8 +5,8 @@ import net.fabricmc.fabric.api.util.TriState;
 import net.lixir.pre.common.init.tag.PREItemTags;
 import net.minecraft.enchantment.Enchantments;
 
-public class PREEvents {
-    public static void initialize() {
+public interface PREEvents {
+    static void initialize() {
         EnchantmentEvents.ALLOW_ENCHANTING.register((registryEntry, itemStack, enchantingContext) -> {
             if (itemStack.isIn(PREItemTags.SPEARS) &&
                     (registryEntry.matchesKey(Enchantments.SHARPNESS) ||

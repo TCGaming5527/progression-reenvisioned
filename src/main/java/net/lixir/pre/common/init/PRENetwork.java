@@ -4,12 +4,9 @@ import net.lixir.pre.common.payload.*;
 
 import static net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.playS2C;
 
-public final class PRENetwork {
-    private PRENetwork() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-    }
+public interface PRENetwork {
 
-    public static void initialize() {
+    static void initialize() {
         registerPayloads();
         registerHandlers();
     }

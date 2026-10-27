@@ -6,26 +6,22 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
-public final class PRESoundEvents {
-    public static final SoundEvent BLOCK_RECYCLER_EMPTY = register("block.recycler.empty");
-    public static final SoundEvent BLOCK_RECYCLER_FAIL = register("block.recycler.fail");
-    public static final SoundEvent BLOCK_RECYCLER_INSERT = register("block.recycler.insert");
-    public static final SoundEvent ITEM_ENDER_EYE_TELEPORT = register("item.ender_eye.teleport");
-    public static final SoundEvent ITEM_ENDER_EYE_TELEPORT_START = register("item.ender_eye.teleport_start");
-    public static final SoundEvent ITEM_ENDER_EYE_TELEPORT_AMBIENT = register("item.ender_eye.teleport_ambient");
-    public static final SoundEvent ITEM_TRANSENDER_TELEPORT_START = register("item.transender.teleport_start");
-    public static final SoundEvent ITEM_RECOVERY_COMPASS_RESONANCE = register("item.recovery_compass.resonance");
-    public static final SoundEvent ITEM_TRANSENDER_AMBIENT = register("item.transender.teleport_ambient");
-    public static final SoundEvent ITEM_TRANSENDER_TELEPORT = register("item.transender.teleport");
-    public static final SoundEvent ITEM_TRANSENDER_CHARGED = register("item.transender.charged");
-    public static final SoundEvent ITEM_SPEAR_JAB = register("item.spear.jab");
-    public static final SoundEvent ITEM_SPEAR_USE = register("item.spear.use");
-    public static final SoundEvent ITEM_SPEAR_LUNGE = register("item.spear.lunge");
-    public static final SoundEvent MISC_TYPE = register("misc.type");
-
-    private PRESoundEvents() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-    }
+public interface PRESoundEvents {
+    SoundEvent BLOCK_RECYCLER_EMPTY = register("block.recycler.empty");
+    SoundEvent BLOCK_RECYCLER_FAIL = register("block.recycler.fail");
+    SoundEvent BLOCK_RECYCLER_INSERT = register("block.recycler.insert");
+    SoundEvent ITEM_ENDER_EYE_TELEPORT = register("item.ender_eye.teleport");
+    SoundEvent ITEM_ENDER_EYE_TELEPORT_START = register("item.ender_eye.teleport_start");
+    SoundEvent ITEM_ENDER_EYE_TELEPORT_AMBIENT = register("item.ender_eye.teleport_ambient");
+    SoundEvent ITEM_TRANSENDER_TELEPORT_START = register("item.transender.teleport_start");
+    SoundEvent ITEM_RECOVERY_COMPASS_RESONANCE = register("item.recovery_compass.resonance");
+    SoundEvent ITEM_TRANSENDER_AMBIENT = register("item.transender.teleport_ambient");
+    SoundEvent ITEM_TRANSENDER_TELEPORT = register("item.transender.teleport");
+    SoundEvent ITEM_TRANSENDER_CHARGED = register("item.transender.charged");
+    SoundEvent ITEM_SPEAR_JAB = register("item.spear.jab");
+    SoundEvent ITEM_SPEAR_USE = register("item.spear.use");
+    SoundEvent ITEM_SPEAR_LUNGE = register("item.spear.lunge");
+    SoundEvent MISC_TYPE = register("misc.type");
 
     private static SoundEvent register(String id) {
         return register(ProgressionReEnvisioned.id(id));
@@ -39,7 +35,7 @@ public final class PRESoundEvents {
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(soundId));
     }
 
-    public static void initialize() {
+    static void initialize() {
 
     }
 }

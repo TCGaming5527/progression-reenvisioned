@@ -15,8 +15,8 @@ import net.minecraft.sound.BlockSoundGroup;
 
 import java.util.function.Function;
 
-public class PREBlocks {
-    public static final Block PLATFORM = register(
+public interface PREBlocks {
+    Block PLATFORM = register(
             "platform",
             PlatformBlock::new,
             AbstractBlock.Settings.create()
@@ -27,29 +27,29 @@ public class PREBlocks {
                     .suffocates((a, b, c) -> false)
                     .emissiveLighting((state, world, pos) -> true)
     );
-    public static final Block RECYCLER = register("recycler", RecyclerBlock::new, AbstractBlock.Settings.create()
+    Block RECYCLER = register("recycler", RecyclerBlock::new, AbstractBlock.Settings.create()
             .sounds(BlockSoundGroup.VAULT).resistance(1f).hardness(1f));
-    public static final Block INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlock::new,
+    Block INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlock::new,
             AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE));
 
-    private static RegistryKey<Block> keyOf(String id) {
+    static RegistryKey<Block> keyOf(String id) {
         return RegistryKey.of(RegistryKeys.BLOCK, ProgressionReEnvisioned.id(id));
     }
 
-    private static Block register(String id, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
+    static Block register(String id, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
         return register(keyOf(id), factory, settings);
     }
 
-    private static Block register(String id, AbstractBlock.Settings settings) {
+    static Block register(String id, AbstractBlock.Settings settings) {
         return register(id, Block::new, settings);
     }
 
-    public static Block register(RegistryKey<Block> key, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
+    static Block register(RegistryKey<Block> key, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
         Block block = factory.apply(settings.registryKey(key));
         return Registry.register(Registries.BLOCK, key, block);
     }
 
-    public static void initialize() {
+    static void initialize() {
 
     }
 }
