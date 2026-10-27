@@ -332,7 +332,7 @@ public class PRERecyclingLootTableProvider extends SimpleFabricLootTableProvider
                                 .rolls(ConstantLootNumberProvider.create(1))
                                 .with(ItemEntry.builder(PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE))
                                 .with(ItemEntry.builder(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE))
-                                .with(randomlyEnchanted(Items.ENCHANTED_BOOK))
+                                .with(randomlyEnchanted(Items.BOOK))
                                 .with(ItemEntry.builder(Items.NETHERITE_SCRAP).apply(
                                         SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2))
                                 ))

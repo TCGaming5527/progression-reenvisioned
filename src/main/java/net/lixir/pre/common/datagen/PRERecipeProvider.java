@@ -9,16 +9,15 @@ import net.lixir.pre.common.init.PREItems;
 import net.lixir.pre.common.init.tag.PREConventionalItemTags;
 import net.lixir.pre.common.init.tag.PREItemTags;
 import net.lixir.pre.common.util.RecipeUtil;
+import net.minecraft.data.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.recipe.SmithingTransformRecipeJsonBuilder;
 import net.minecraft.data.tag.ItemTagProvider;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
@@ -65,6 +64,29 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                         output,
                         0
                 );
+            }
+
+            private void offerCampfireRecipe(
+                    int cookingTime,
+                    TagKey<Item> input,
+                    Item output
+            ) {
+                offerFoodCookingRecipe(
+                        "campfire",
+                        RecipeSerializer.CAMPFIRE_COOKING,
+                        CampfireCookingRecipe::new,
+                        cookingTime,
+                        input,
+                        output,
+                        0
+                );
+            }
+
+            private <T extends AbstractCookingRecipe> void offerFoodCookingRecipe(String cooker, RecipeSerializer<T> serializer, AbstractCookingRecipe.RecipeFactory<T> recipeFactory, int cookingTime, TagKey<Item> input, ItemConvertible output, float experience) {
+                CookingRecipeJsonBuilder var10000 = CookingRecipeJsonBuilder.create(Ingredient.fromTag(RecipeUtil.getItemsFromTag(registries, input)), RecipeCategory.FOOD, output, experience, cookingTime, serializer, recipeFactory).criterion(hasItem(output), this.conditionsFromTag(input));
+                RecipeExporter var10001 = this.exporter;
+                String var10002 = getItemPath(output);
+                var10000.offerTo(var10001, var10002 + "_from_" + cooker);
             }
 
             private void offerSmithingTransformRecipe(
