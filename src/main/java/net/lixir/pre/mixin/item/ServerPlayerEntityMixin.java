@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
@@ -20,10 +20,12 @@ public class ServerPlayerEntityMixin {
     private void pre$storeRelics(DamageSource damageSource, CallbackInfo ci) {
         ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
 
-        List<ItemStack> relics = new ArrayList<>();
-        for (ItemStack stack : player.getInventory()) {
+        Map<Integer, ItemStack> relics = new HashMap<>();
+        for (int slot = 0; slot < player.getInventory().size(); slot++) {
+            ItemStack stack = player.getInventory().getStack(slot);
+
             if (stack.getRarity() == Rarity.PROGRESSION_REENVISIONED_RELIC) {
-                relics.add(stack.copyAndEmpty());
+                relics.put(slot, stack.copyAndEmpty());
             }
         }
         player.setAttached(PREAttachmentTypes.RELICS, relics);
