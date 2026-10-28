@@ -72,26 +72,26 @@ public class CompassHud {
             Text text = tool.getText(client, player, toolStack);
 
             matrices.push();
-            matrices.scale(1.5f, 1.5f, 1f);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, tool.texture, cursorX, y, 32, 32);
+            matrices.scale(1.0f, 1.0f, 0.5f);
+            context.drawGuiTexture(RenderLayer::getGuiTextured, tool.texture, cursorX, y, 104, 24);
             matrices.pop();
 
             matrices.push();
             int textWidth = textRenderer.getWidth(text);
 
             float scaling = 38f / (float) textWidth;
-            float textX = (cursorX + (((float) textWidth / 2f) * scaling) - 10) + i * 20;
-            float textY = y - (((float) textRenderer.fontHeight /2) * scaling) + 24;
+            float textX = (cursorX + (((float) textWidth / 2f) * scaling) - 5) - i * 1f;
+            float textY = y - (((float) textRenderer.fontHeight /2) * scaling) + 17.5f;
             matrices.translate(textX, textY, 100f);
 
-            matrices.scale(scaling, scaling, 1f);
-            context.drawText(textRenderer, text, 0, 0, 0xFFFFFFFF, true);
+            matrices.scale(scaling, scaling, 2);
+            context.drawText(textRenderer, text, 45, 0, 0xFFFFFFFF, true);
 
 
             matrices.pop();
 
             i++;
-            cursorX += 40;
+            cursorX += 110;
         }
 
     }
@@ -102,7 +102,7 @@ public class CompassHud {
             GlobalPos deathPos = deathPosOpt.get();
             if (deathPos.dimension() == player.getWorld().getRegistryKey()) {
                 BlockPos deathBlockPos = deathPos.pos();
-                return Text.literal(deathBlockPos.getX() + ", " + deathBlockPos.getY()+ ", " + deathBlockPos.getZ());
+                return Text.literal(deathBlockPos.getX() + " " + deathBlockPos.getY()+ " " + deathBlockPos.getZ());
             }
         }
         return Text.literal("???");
