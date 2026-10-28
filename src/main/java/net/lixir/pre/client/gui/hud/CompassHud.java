@@ -9,6 +9,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.component.type.LodestoneTrackerComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -19,12 +20,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
 public class CompassHud {
@@ -33,6 +33,10 @@ public class CompassHud {
     }
     private static final Identifier RECOVERY_COMPASS_TEXTURE = ProgressionReEnvisioned.id("hud/recovery_compass");
     private static final Identifier COMPASS_TEXTURE = ProgressionReEnvisioned.id("hud/compass");
+
+    private static final int TEXTURE_WIDTH = 101;
+    private static final int TEXTURE_HEIGHT = 22;
+
     public static final Identifier LAYER = ProgressionReEnvisioned.id("compass");
     public static final CompassHud INSTANCE = new CompassHud();
 
@@ -55,6 +59,14 @@ public class CompassHud {
                 if (tool.predicate.test(stack)) {
                     activeTools.put(tool, stack);
                     return true;
+                } else if (stack.contains(DataComponentTypes.BUNDLE_CONTENTS)) {
+                    BundleContentsComponent bundleContents = stack.getOrDefault(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT);
+                    for (ItemStack s : bundleContents.iterate()) {
+                        if (tool.predicate.test(s)) {
+                            activeTools.put(tool, s);
+                            break;
+                        }
+                    }
                 }
                 return false;
             });
@@ -66,32 +78,29 @@ public class CompassHud {
         int cursorX = x;
         MatrixStack matrices = context.getMatrices();
 
-        int i = 0;
         for (Tools tool : activeTools.keySet()) {
             ItemStack toolStack = activeTools.get(tool);
             Text text = tool.getText(client, player, toolStack);
 
-            matrices.push();
-            matrices.scale(1.0f, 1.0f, 0.5f);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, tool.texture, cursorX, y, 104, 24);
-            matrices.pop();
+            float textWidth = (float) textRenderer.getWidth(text);
+            float scaling = Math.min(1F, 74F / textWidth);
 
             matrices.push();
-            int textWidth = textRenderer.getWidth(text);
+            matrices.translate(cursorX, y, 0);
 
-            float scaling = 38f / (float) textWidth;
-            float textX = (cursorX + (((float) textWidth / 2f) * scaling) - 5) - i * 1f;
-            float textY = y - (((float) textRenderer.fontHeight /2) * scaling) + 17.5f;
-            matrices.translate(textX, textY, 100f);
+            context.drawItem(toolStack, 3, 3);
+            context.drawGuiTexture(RenderLayer::getGuiTextured, tool.texture, 0, 0, TEXTURE_WIDTH, TEXTURE_HEIGHT);
 
-            matrices.scale(scaling, scaling, 2);
-            context.drawText(textRenderer, text, 45, 0, 0xFFFFFFFF, true);
+            matrices.translate(23 + (scaling < 1 ? 0 : 37F - textWidth / 2), TEXTURE_HEIGHT / 2F - 8 * scaling + 4, 0F);
+            if (scaling < 1) {
+                matrices.scale(scaling, scaling, 1F);
+            }
 
 
+            context.drawText(textRenderer, text, 0, 0, 0xFFFFFFFF, true);
             matrices.pop();
 
-            i++;
-            cursorX += 110;
+            cursorX += TEXTURE_WIDTH + 10;
         }
 
     }
