@@ -818,18 +818,41 @@ public class PRERecipeProvider extends FabricRecipeProvider {
                         Items.STONE
                 );
                 offerCampfireRecipe(
+                        1200,
+                        Items.STONE,
+                        Items.SMOOTH_STONE
+                );
+                offerCampfireRecipe(
                         600,
                         Items.ROTTEN_FLESH,
                         Items.LEATHER
                 );
                 offerCampfireRecipe(
                         600,
-                        Items.OAK_LOG,
+                        ItemTags.LOGS_THAT_BURN,
                         Items.CHARCOAL
                 );
-                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.FLINT, 4)
-                        .input(Items.GRAVEL, 2)
-                        .criterion("has_gravel", conditionsFromItem(Items.GRAVEL))
+                CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItem(Items.ROTTEN_FLESH),
+                        RecipeCategory.MISC,
+                        Items.LEATHER,
+                        0.35F,
+                        200)
+                        .criterion("has_rotten_flesh",
+                                this.conditionsFromItem(Items.ROTTEN_FLESH)).offerTo(this.exporter);
+
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.OAK_PLANKS, 1)
+                        .input(Items.STICK, 2)
+                        .criterion("has_stick", conditionsFromItem(Items.STICK))
+                        .offerTo(this.exporter, modRegistryKey("oak_planks"));
+
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.STRIPPED_OAK_LOG, 1)
+                        .input(Items.OAK_PLANKS, 5)
+                        .criterion("has_oak_planks", conditionsFromItem(Items.OAK_PLANKS))
+                        .offerTo(this.exporter, modRegistryKey("stripped_oak_log"));
+
+                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.FLINT, 8)
+                        .input(Items.COBBLESTONE, 2)
+                        .criterion("has_cobblestone", conditionsFromItem(Items.COBBLESTONE))
                         .offerTo(this.exporter, modRegistryKey("flint"));
 
                 createShapeless(RecipeCategory.MISC, PREItems.ROSE_GOLD_INGOT)

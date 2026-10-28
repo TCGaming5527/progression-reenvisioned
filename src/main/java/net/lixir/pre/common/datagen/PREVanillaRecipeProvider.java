@@ -157,10 +157,6 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         .criterion("has_brown_concrete_powder", conditionsFromItem(Items.BROWN_CONCRETE_POWDER))
                         .criterion("has_water_bucket", conditionsFromItem(Items.WATER_BUCKET))
                         .offerTo(this.exporter, vanillaRegistryKey("brown_concrete"));
-                createShapeless(RecipeCategory.BUILDING_BLOCKS, Items.FLINT, 8)
-                        .input(Items.COBBLESTONE, 2)
-                        .criterion("has_cobblestone", conditionsFromItem(Items.COBBLESTONE))
-                        .offerTo(this.exporter, vanillaRegistryKey("flint"));
                 createShapeless(RecipeCategory.TOOLS, Items.FLINT_AND_STEEL)
                         .input(Items.COBBLESTONE, 1)
                         .input(Items.FLINT, 1)
@@ -213,7 +209,7 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         Items.FURNACE
                 )
                         .pattern("SSS")
-                        .pattern("PCP")
+                        .pattern("SCS")
                         .pattern("PPP")
                         .input('S', Items.STONE)
                         .input('C', ItemTags.COALS)
@@ -229,7 +225,7 @@ public class PREVanillaRecipeProvider extends FabricRecipeProvider {
                         Items.BLAST_FURNACE
                 )
                         .pattern("SSS")
-                        .pattern("PCP")
+                        .pattern("SCS")
                         .pattern("PPP")
                         .input('S', Items.POLISHED_DEEPSLATE)
                         .input('C', ItemTags.COALS)
