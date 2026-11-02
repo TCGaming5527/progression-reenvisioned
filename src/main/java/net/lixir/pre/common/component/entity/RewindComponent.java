@@ -1,14 +1,17 @@
 package net.lixir.pre.common.component.entity;
 
 import net.lixir.pre.common.init.PREEntityComponents;
+import net.lixir.pre.common.init.PREItems;
 import net.lixir.pre.common.item.OldClockItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -19,9 +22,6 @@ import java.util.List;
 
 public class RewindComponent implements CommonTickingComponent, AutoSyncedComponent {
     private final PlayerEntity player;
-
-    private static final String IS_REWINDING = "isRewinding";
-    private boolean isRewinding = false;
 
     private static final String TIMELINE = "Timeline";
     private final List<Vec3d> timeline = new ArrayList<>();
@@ -44,11 +44,10 @@ public class RewindComponent implements CommonTickingComponent, AutoSyncedCompon
     @Override
     public void tick() {
         if (this.isRewinding()) {
-            ItemStack mainHandStack = this.player.getMainHandStack();
+            ItemStack clockStack = this.player.getActiveItem();
 
-            if (!(mainHandStack.getItem() instanceof OldClockItem) || this.timeline.isEmpty()) {
-                this.setRewinding(false);
-                this.player.setVelocity(this.player.getVelocity().normalize().multiply(2));
+            if (!this.canRewind()) {
+                this.stopRewind(clockStack, true);
             } else {
                 Vec3d target = this.timeline.getLast();
                 Vec3d vel = this.player.getPos().relativize(target);
@@ -73,8 +72,7 @@ public class RewindComponent implements CommonTickingComponent, AutoSyncedCompon
                         this.rewindTimeout++;
 
                         if (this.rewindTimeout > 10) {
-                            this.rewindTimeout = 0;
-                            this.setRewinding(false);
+                            this.stopRewind(clockStack, false);
                         }
                     } else {
                         this.rewindTimeout = 0;
@@ -104,7 +102,6 @@ public class RewindComponent implements CommonTickingComponent, AutoSyncedCompon
             }
 
         }
-        this.isRewinding = nbt.getBoolean(IS_REWINDING, false);
     }
 
     @Override
@@ -119,18 +116,34 @@ public class RewindComponent implements CommonTickingComponent, AutoSyncedCompon
             timelineTag.add(compound);
         }
         nbt.put(TIMELINE, timelineTag);
-        nbt.putBoolean(IS_REWINDING, isRewinding);
+    }
+
+    public boolean startRewind(ItemStack stack, Hand hand) {
+        if (this.canRewind()) {
+            this.player.setCurrentHand(hand);
+            this.lastPos = this.player.getPos();
+
+            this.sync();
+            return true;
+        }
+        return false;
+    }
+
+    public void stopRewind(ItemStack stack, boolean launch) {
+        this.player.getItemCooldownManager().set(stack, 33);
+        this.player.stopUsingItem();
+
+        if (launch) {
+            this.player.setVelocity(this.player.getVelocity().normalize().multiply(2));
+        }
+    }
+
+    public boolean canRewind() {
+        return !this.getTimeline().isEmpty();
     }
 
     public boolean isRewinding() {
-        return this.isRewinding;
-    }
-
-    public void setRewinding(boolean rewind) {
-        this.isRewinding = rewind;
-        this.sync();
-
-        this.lastPos = this.player.getPos();
+        return this.player.isUsingItem() && this.player.getActiveItem().isOf(PREItems.OLD_CLOCK);
     }
 
     public void addToTimeline(Vec3d pos) {

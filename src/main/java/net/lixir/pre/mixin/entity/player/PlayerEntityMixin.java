@@ -1,6 +1,10 @@
 package net.lixir.pre.mixin.entity.player;
 
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.lixir.pre.common.duck.entity.player.PlayerEntityDuck;
+import net.lixir.pre.common.init.PREStatusEffects;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,7 +41,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private void pre$tick(CallbackInfo ci) {
         if (lungeCooldown > 0)
             lungeCooldown--;
+    }
 
+    @ModifyExpressionValue(method = "getBlockBreakingSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isOnGround()Z"))
+    private boolean pre$godsGraceBuff(boolean original) {
+        PlayerEntity player = (PlayerEntity) (Object) this;
+        return original || player.hasStatusEffect(PREStatusEffects.GODS_GRACE);
     }
 
 }

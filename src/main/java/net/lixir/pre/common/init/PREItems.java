@@ -32,8 +32,10 @@ import net.minecraft.util.Rarity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public interface PREItems {
     //region Items
@@ -64,7 +66,7 @@ public interface PREItems {
                     .enchantable(15)
                     .maxDamage(2031)
                     .repairable(PREItems.ELECTRUM_INGOT)
-                    .attributeModifiers(createElectrumSpearAttributes())
+                    .attributeModifiers(createSpearAttributes())
     );
     Item NETHERITE_SPEAR = register("netherite_spear", SpearItem::new,
             new Item.Settings()
@@ -73,7 +75,7 @@ public interface PREItems {
                     .enchantable(15)
                     .maxDamage(2031)
                     .repairable(Items.NETHERITE_INGOT)
-                    .attributeModifiers(createElectrumSpearAttributes())
+                    .attributeModifiers(createSpearAttributes())
     );
     Item ALUMNABRASS_SPEAR = register("alumnabrass_spear", SpearItem::new,
             new Item.Settings()
@@ -82,7 +84,7 @@ public interface PREItems {
                     .enchantable(15)
                     .maxDamage(2031)
                     .repairable(PREItems.ALUMNABRASS_INGOT)
-                    .attributeModifiers(createElectrumSpearAttributes())
+                    .attributeModifiers(createSpearAttributes())
     );
     Item VOCALITE_SPEAR = register("vocalite_spear", SpearItem::new,
             new Item.Settings()
@@ -91,7 +93,7 @@ public interface PREItems {
                     .enchantable(15)
                     .maxDamage(2031)
                     .repairable(PREItems.VOCALITE_INGOT)
-                    .attributeModifiers(createElectrumSpearAttributes())
+                    .attributeModifiers(createSpearAttributes())
     );
 
     Item RECYCLER = register(PREBlocks.RECYCLER);
@@ -277,7 +279,7 @@ public interface PREItems {
         return builder.build();
     }
 
-    static AttributeModifiersComponent createElectrumSpearAttributes() {
+    static AttributeModifiersComponent createSpearAttributes() {
         return AttributeModifiersComponent.builder()
                 .add(
                         EntityAttributes.ATTACK_DAMAGE,
@@ -405,6 +407,37 @@ public interface PREItems {
                         slot
                 )
                 .build();
+    }
+
+    static void applyArmorAttributes(Item head, Item chest, Item legs, Item feet, Function<AttributeModifierSlot, AttributeModifiersComponent> componentFunction) {
+        DefaultItemComponentEvents.MODIFY.register((ctx) -> {
+            var map = Map.of(
+                    head, AttributeModifierSlot.HEAD,
+                    chest, AttributeModifierSlot.CHEST,
+                    legs, AttributeModifierSlot.LEGS,
+                    feet, AttributeModifierSlot.FEET
+            );
+            map.forEach((item, slot) -> {
+                ctx.modify(item, builder -> {
+                    builder.add(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(
+                            builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT),
+                            componentFunction.apply(slot)
+                    ));
+                });
+            });
+        });
+    }
+    static void applyToolAttributes(Supplier<AttributeModifiersComponent> attributeSupplier, Item... items) {
+        DefaultItemComponentEvents.MODIFY.register((ctx) -> {
+            for (Item item : items) {
+                ctx.modify(item, builder -> {
+                    builder.add(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(
+                            builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT),
+                            attributeSupplier.get()
+                    ));
+                });
+            }
+        });
     }
     //endregion
 
@@ -542,11 +575,8 @@ public interface PREItems {
                 });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS)
                 .register(entries -> {
-                    entries.addAfter(Items.GOLD_INGOT, PREItems.BRASS_INGOT);
-                    entries.addAfter(PREItems.BRASS_INGOT, PREItems.ROSE_GOLD_INGOT);
-                    entries.addBefore(Items.NETHERITE_INGOT, PREItems.ELECTRUM_INGOT);
-                    entries.addBefore(PREItems.ELECTRUM_INGOT, PREItems.ALUMNABRASS_INGOT);
-                    entries.addBefore(Items.NETHERITE_INGOT, PREItems.VOCALITE_INGOT);
+                    entries.addAfter(Items.GOLD_INGOT, BRASS_INGOT, ROSE_GOLD_INGOT);
+                    entries.addBefore(Items.NETHERITE_INGOT, VOCALITE_INGOT, ELECTRUM_INGOT, ALUMNABRASS_INGOT);
                     entries.addBefore(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, PREItems.BASIC_UPGRADE_SMITHING_TEMPLATE);
                 });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL)
@@ -554,146 +584,19 @@ public interface PREItems {
                     entries.addAfter(Items.COMPOSTER, PREItems.RECYCLER);
                     entries.addAfter(Items.BLAST_FURNACE, PREItems.INDUCTION_FURNACE);
                 });
+
+        applyArmorAttributes(COPPER_HELMET, COPPER_CHESTPLATE, COPPER_LEGGINGS, COPPER_BOOTS, PREItems::createCopperArmorAttributes);
+        applyArmorAttributes(ALUMNABRASS_HELMET, ALUMNABRASS_CHESTPLATE, ALUMNABRASS_LEGGINGS, ALUMNABRASS_BOOTS, PREItems::createAlumnabrassArmorAttributes);
+        applyArmorAttributes(ELECTRUM_HELMET, ELECTRUM_CHESTPLATE, ELECTRUM_LEGGINGS, ELECTRUM_BOOTS, PREItems::createElectrumArmorAttributes);
+        applyArmorAttributes(VOCALITE_HELMET, VOCALITE_CHESTPLATE, VOCALITE_LEGGINGS, VOCALITE_BOOTS, PREItems::createVocaliteArmorAttributes);
+        applyArmorAttributes(Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS, PREItems::createNetheriteArmorAttributes);
+
+        applyToolAttributes(PREItems::createAlumnabrassToolAttributes, ALUMNABRASS_SWORD, ALUMNABRASS_SPEAR, ALUMNABRASS_AXE, ALUMNABRASS_PICKAXE, ALUMNABRASS_SHOVEL, ALUMNABRASS_HOE);
+        applyToolAttributes(PREItems::createElectrumToolAttributes, ELECTRUM_SWORD, ELECTRUM_SPEAR, ELECTRUM_AXE, ELECTRUM_PICKAXE, ELECTRUM_SHOVEL, ELECTRUM_HOE);
+        applyToolAttributes(PREItems::createVocaliteToolAttributes, VOCALITE_SWORD, VOCALITE_SPEAR, VOCALITE_AXE, VOCALITE_PICKAXE, VOCALITE_SHOVEL, VOCALITE_HOE);
+        applyToolAttributes(PREItems::createNetheriteToolAttributes, Items.NETHERITE_SWORD, NETHERITE_SPEAR, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
+
         DefaultItemComponentEvents.MODIFY.register(context -> {
-            context.modify(item -> item == Items.ENDER_EYE,
-                    (builder, item) -> builder.add(DataComponentTypes.MAX_STACK_SIZE, 16));
-
-            context.modify(item -> item == COPPER_HELMET
-                            || item == COPPER_CHESTPLATE
-                            || item == COPPER_LEGGINGS
-                            || item == COPPER_BOOTS,
-                    (builder, item) -> {
-                        AttributeModifierSlot slot;
-                        if (item == COPPER_HELMET) slot = AttributeModifierSlot.HEAD;
-                        else if (item == COPPER_CHESTPLATE) slot = AttributeModifierSlot.CHEST;
-                        else if (item == COPPER_LEGGINGS) slot = AttributeModifierSlot.LEGS;
-                        else slot = AttributeModifierSlot.FEET;
-
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createCopperArmorAttributes(slot);
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
-
-            context.modify(item -> item == ALUMNABRASS_HELMET
-                            || item == ALUMNABRASS_CHESTPLATE
-                            || item == ALUMNABRASS_LEGGINGS
-                            || item == ALUMNABRASS_BOOTS,
-                    (builder, item) -> {
-                        AttributeModifierSlot slot;
-                        if (item == ALUMNABRASS_HELMET) slot = AttributeModifierSlot.HEAD;
-                        else if (item == ALUMNABRASS_CHESTPLATE) slot = AttributeModifierSlot.CHEST;
-                        else if (item == ALUMNABRASS_LEGGINGS) slot = AttributeModifierSlot.LEGS;
-                        else slot = AttributeModifierSlot.FEET;
-
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createAlumnabrassArmorAttributes(slot);
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
-
-            context.modify(item -> item == ELECTRUM_HELMET
-                            || item == ELECTRUM_CHESTPLATE
-                            || item == ELECTRUM_LEGGINGS
-                            || item == ELECTRUM_BOOTS,
-                    (builder, item) -> {
-                        AttributeModifierSlot slot;
-                        if (item == ELECTRUM_HELMET) slot = AttributeModifierSlot.HEAD;
-                        else if (item == ELECTRUM_CHESTPLATE) slot = AttributeModifierSlot.CHEST;
-                        else if (item == ELECTRUM_LEGGINGS) slot = AttributeModifierSlot.LEGS;
-                        else slot = AttributeModifierSlot.FEET;
-
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createElectrumArmorAttributes(slot);
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
-
-            context.modify(item -> item == VOCALITE_HELMET
-                            || item == VOCALITE_CHESTPLATE
-                            || item == VOCALITE_LEGGINGS
-                            || item == VOCALITE_BOOTS,
-                    (builder, item) -> {
-                        AttributeModifierSlot slot;
-                        if (item == VOCALITE_HELMET) slot = AttributeModifierSlot.HEAD;
-                        else if (item == VOCALITE_CHESTPLATE) slot = AttributeModifierSlot.CHEST;
-                        else if (item == VOCALITE_LEGGINGS) slot = AttributeModifierSlot.LEGS;
-                        else slot = AttributeModifierSlot.FEET;
-
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createVocaliteArmorAttributes(slot);
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
-
-            context.modify(item -> item == Items.NETHERITE_HELMET
-                            || item == Items.NETHERITE_CHESTPLATE
-                            || item == Items.NETHERITE_LEGGINGS
-                            || item == Items.NETHERITE_BOOTS,
-                    (builder, item) -> {
-                        AttributeModifierSlot slot;
-                        if (item == Items.NETHERITE_HELMET) slot = AttributeModifierSlot.HEAD;
-                        else if (item == Items.NETHERITE_CHESTPLATE) slot = AttributeModifierSlot.CHEST;
-                        else if (item == Items.NETHERITE_LEGGINGS) slot = AttributeModifierSlot.LEGS;
-                        else slot = AttributeModifierSlot.FEET;
-
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createNetheriteArmorAttributes(slot);
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
-
-            context.modify(item -> item == ALUMNABRASS_SWORD
-                            || item == ALUMNABRASS_SHOVEL
-                            || item == ALUMNABRASS_PICKAXE
-                            || item == ALUMNABRASS_AXE
-                            || item == ALUMNABRASS_HOE
-                            || item == ALUMNABRASS_SPEAR,
-                    (builder, item) -> {
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createAlumnabrassToolAttributes();
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
-
-            context.modify(item -> item == ELECTRUM_SWORD
-                            || item == ELECTRUM_SHOVEL
-                            || item == ELECTRUM_PICKAXE
-                            || item == ELECTRUM_AXE
-                            || item == ELECTRUM_HOE
-                            || item == ELECTRUM_SPEAR,
-                    (builder, item) -> {
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createElectrumToolAttributes();
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
-
-            context.modify(item -> item == VOCALITE_SWORD
-                            || item == VOCALITE_SHOVEL
-                            || item == VOCALITE_PICKAXE
-                            || item == VOCALITE_AXE
-                            || item == VOCALITE_HOE
-                            || item == VOCALITE_SPEAR,
-                    (builder, item) -> {
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createVocaliteToolAttributes();
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
-
-            context.modify(item -> item == Items.NETHERITE_SWORD
-                            || item == Items.NETHERITE_SHOVEL
-                            || item == Items.NETHERITE_PICKAXE
-                            || item == Items.NETHERITE_AXE
-                            || item == Items.NETHERITE_HOE
-                            || item == NETHERITE_SPEAR,
-                    (builder, item) -> {
-                        var existing = builder.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder().build());
-                        var addition = createNetheriteToolAttributes();
-
-                        builder.put(DataComponentTypes.ATTRIBUTE_MODIFIERS, merge(existing, addition));
-                    });
             context.modify(Items.RECOVERY_COMPASS, builder ->
                     builder.add(
                             PREDataComponentTypes.PERSISTS_PLAYER_DEATH,
@@ -707,18 +610,23 @@ public interface PREItems {
                     DataComponentTypes.ENCHANTABLE,
                     new EnchantableComponent(5)
             ));
+            context.modify(Items.TRIDENT, builder -> builder.add(
+                    DataComponentTypes.RARITY,
+                    Rarity.PROGRESSION_REENVISIONED_RELIC
+            ));
             context.modify(Items.MACE, builder -> builder.add(
                     DataComponentTypes.REPAIRABLE,
                     new RepairableComponent(
                             RegistryEntryList.of(
                                     Items.NETHERITE_INGOT.getRegistryEntry()
                             )
-                    )).add(DataComponentTypes.ATTRIBUTE_MODIFIERS, createNetheriteMaceAttributes())
+                    ))
+                    .add(DataComponentTypes.ATTRIBUTE_MODIFIERS, createNetheriteMaceAttributes())
                     .put(DataComponentTypes.RARITY, Rarity.PROGRESSION_REENVISIONED_RELIC));
-            context.modify(Items.ENDER_EYE, builder -> builder.add(
-                    DataComponentTypes.RARITY,
-                    Rarity.UNCOMMON
-            ));
+            context.modify(Items.ENDER_EYE, builder ->
+                    builder.add(DataComponentTypes.RARITY, Rarity.UNCOMMON)
+                            .add(DataComponentTypes.MAX_STACK_SIZE, 16)
+            );
             context.modify(Items.RECOVERY_COMPASS, builder ->
                     builder.put(DataComponentTypes.RARITY, Rarity.PROGRESSION_REENVISIONED_RELIC));
             context.modify(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, builder -> builder.add(

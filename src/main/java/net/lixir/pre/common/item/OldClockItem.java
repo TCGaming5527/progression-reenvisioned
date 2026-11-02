@@ -1,8 +1,10 @@
 package net.lixir.pre.common.item;
 
 import net.lixir.pre.common.component.entity.RewindComponent;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
@@ -16,11 +18,9 @@ public class OldClockItem extends Item {
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
         var rewindData = RewindComponent.get(user);
-        if (!rewindData.isRewinding() && !rewindData.getTimeline().isEmpty()) {
+        if (!rewindData.startRewind(user.getStackInHand(hand), hand)) {
             user.setVelocity(Vec3d.ZERO);
-            rewindData.setRewinding(true);
-        } else if (rewindData.isRewinding()) {
-            rewindData.setRewinding(false);
+            return ActionResult.CONSUME;
         }
         return super.use(world, user, hand);
     }
