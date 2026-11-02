@@ -13,6 +13,7 @@
     "accessor.ItemCooldownManagerEntryAccessor",
     "accessor.SmithingTemplateItemAccessor",
     "block.AbstractFireBlockMixin",
+    "block.BeaconBlockEntityMixin",
     "block.CampfireBlockMixin",
     "enchantment.EnchantmentHelperMixin",
     "enchantment.EnchantmentsMixin",

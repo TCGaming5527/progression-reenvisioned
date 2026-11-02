@@ -1,9 +1,13 @@
 package net.lixir.pre.mixin.entity;
 
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.lixir.pre.common.component.entity.RewindComponent;
 import net.lixir.pre.common.init.PREEntityAttributes;
+import net.lixir.pre.common.init.PREStatusEffects;
 import net.lixir.pre.common.init.tag.PREDamageTypeTags;
 import net.lixir.pre.common.init.tag.PREEntityTypeTags;
 import net.minecraft.entity.Entity;
@@ -12,14 +16,29 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
+    @Shadow
+    public float forwardSpeed;
+
+    @Shadow
+    public abstract float getYaw(float tickProgress);
+
+    @Shadow
+    public float sidewaysSpeed;
+
+    @Shadow
+    public float upwardSpeed;
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -127,8 +146,35 @@ public abstract class LivingEntityMixin extends Entity {
     @ModifyReturnValue(method = "getEffectiveGravity", at = @At("RETURN"))
     private double pre$rewindGravity(double original) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        if (entity instanceof PlayerEntity player && RewindComponent.get(player).isRewinding()) {
+        if (entity instanceof PlayerEntity player && RewindComponent.get(player).isRewinding()
+                || entity.hasStatusEffect(PREStatusEffects.GODS_GRACE)) {
             return 0;
+        }
+        return original;
+    }
+
+    @Definition(id = "g", local = @Local(type = float.class, name = "g"))
+    @Expression("g = @(?)")
+    @ModifyExpressionValue(method = "travelMidAir", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private float pre$godsGraceMovement(float original) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+        if (entity.hasStatusEffect(PREStatusEffects.GODS_GRACE)) {
+            return 1F;
+        }
+        return original;
+    }
+
+    @Definition(id = "vec3d", local = @Local(type = Vec3d.class, name = "vec3d"))
+    @Expression("vec3d = @(?)")
+    @ModifyExpressionValue(method = "travelMidAir", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private Vec3d pre$godsGraceMovement(Vec3d original, Vec3d movementInput) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+        if (entity.hasStatusEffect(PREStatusEffects.GODS_GRACE)) {
+            Vec3d vel = this.getRotationVector().multiply(this.forwardSpeed)
+                    .add(this.getRotationVector(0, this.getYaw() - 90).multiply(this.sidewaysSpeed))
+                    .multiply(0.03);
+
+            return this.getVelocity().multiply(0.87).add(vel);
         }
         return original;
     }

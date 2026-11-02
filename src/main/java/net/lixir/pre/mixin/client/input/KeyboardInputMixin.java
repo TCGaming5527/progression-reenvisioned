@@ -1,6 +1,7 @@
 package net.lixir.pre.mixin.client.input;
 
 import net.lixir.pre.common.init.PREEntityComponents;
+import net.lixir.pre.common.init.PREStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.input.KeyboardInput;
@@ -15,12 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(KeyboardInput.class)
 public abstract class KeyboardInputMixin extends Input {
 
-    @Inject(
-            method = "tick",
-            at = @At(
-                    value = "HEAD"
-            ),
-            cancellable = true)
+    @Inject(method = "tick", at = @At(value = "TAIL"))
     private void pre$tick(CallbackInfo ci) {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayerEntity player = client.player;
@@ -32,7 +28,6 @@ public abstract class KeyboardInputMixin extends Input {
         if (isRewinding) {
             this.playerInput = PlayerInput.DEFAULT;
             this.movementVector = Vec2f.ZERO;
-            ci.cancel();
         }
     }
 }

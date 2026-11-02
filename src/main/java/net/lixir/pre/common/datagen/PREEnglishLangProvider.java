@@ -6,6 +6,7 @@ import net.lixir.pre.common.ProgressionReEnvisioned;
 import net.lixir.pre.common.init.PREBlocks;
 import net.lixir.pre.common.init.PREEntityAttributes;
 import net.lixir.pre.common.init.PREItems;
+import net.lixir.pre.common.init.PREStatusEffects;
 import net.minecraft.registry.RegistryWrapper;
 import org.jetbrains.annotations.NotNull;
 
@@ -292,5 +293,6 @@ public class PREEnglishLangProvider extends FabricLanguageProvider {
 		translationBuilder.add(PREEntityAttributes.UNDEAD_DAMAGE, "Undead Damage");
 		translationBuilder.add(PREEntityAttributes.WILD_DAMAGE, "Wild Damage");
 		//endregion
+		translationBuilder.add(PREStatusEffects.GODS_GRACE.value(), "God's Grace");
 	}
 }
